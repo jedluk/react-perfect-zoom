@@ -14,6 +14,7 @@ class App extends Component {
     mousePosition: { ...INITIAL_POSITION },
     clickPosition: { ...INITIAL_POSITION }
   };
+
   handleMouseMove = e => this.setState({ mousePosition: this.getCoordinates(e) });
 
   handleClick = e => this.setState({ clickPosition: this.getCoordinates(e) });

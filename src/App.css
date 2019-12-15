@@ -17,6 +17,7 @@ body {
 #k13x {
   max-width: 500px;
   max-height: 500px;
+  cursor: crosshair;
 }
 
 .d-inline {
@@ -30,6 +31,7 @@ body {
   position: absolute;
   z-index: 10;
   background-color: #66ff99;
+  cursor: crosshair;
 }
 
 .zoom-top-border,
