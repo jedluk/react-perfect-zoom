@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import sample from './sample.jpg';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const INITIAL_POSITION = { x: null, y: null };
+class App extends Component {
+  state = {
+    mousePosition: { ...INITIAL_POSITION }
+  }
+  handleMouseMove = e =>
+    this.setState({ mousePosition: { x: e.pageX, y: e.pageY } })
+
+  handleMouseLeave = e => this.setState({ mousePosition: { ...INITIAL_POSITION } })
+
+  render() {
+    const { x: posX, y: posY } = this.state.mousePosition;
+    return (
+      <div className="App">
+        <div>
+          <div style={{ position: 'relative' }}>
+            <img
+              onMouseMove={this.handleMouseMove}
+              onMouseLeave={this.handleMouseLeave}
+              id="k13x"
+              alt="main"
+              src={sample}
+            />
+          </div>
+          <p>
+            {posX && <h4 className="d-inline">X: {posX}</h4>}
+            &nbsp;
+            {posY && <h4 className="d-inline">Y: {posY}</h4>}
+          </p>
+        </div>
+        <div>Target </div>
+      </div>
+    );
+  }
 }
 
 export default App;
