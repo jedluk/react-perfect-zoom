@@ -22,16 +22,15 @@ export const getLeftCoordinates = (clickX, clickY, currentX, currentY) => ({
   height: Math.abs(currentY - clickY)
 });
 
-export const cropImage = (imageRef, { posX, posY, clickX, clickY }) => {
-  const scale =  imageRef.naturalHeight / imageRef.clientHeight; 
-  const marginTop = -  Math.floor(Math.min(posY, clickY) * scale);
-  const marginRight = - Math.floor(Math.max(clickX, posX) * scale);
-  const marginBottom = - Math.floor(Math.max(clickY, posY) * scale);
-  const marginLeft = - Math.floor(Math.min(posX, clickX) * scale);
+export const cropImage = (
+  { naturalHeight, naturalWidth, clientHeight },
+  { posX, posY, clickX, clickY }
+) => {
+  const scale = naturalHeight / clientHeight;
   return {
-    marginTop,
-    marginRight,
-    marginBottom,
-    marginLeft
+    marginTop: -Math.floor(Math.min(posY, clickY) * scale),
+    marginRight: -Math.floor(naturalWidth - Math.max(posX, clickX) * scale),
+    marginBottom: -Math.floor(naturalHeight - Math.max(posY, clickY) * scale),
+    marginLeft: -Math.floor(Math.min(posX, clickX) * scale)
   };
 };

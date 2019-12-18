@@ -43,3 +43,13 @@ body {
 .zoom-right-border {
   width: 2px;
 }
+
+.image-picker {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+.image-picker>div:first-child {
+  position: relative;
+}
