@@ -53,3 +53,7 @@ body {
 .image-picker>div:first-child {
   position: relative;
 }
+
+.zoom-container {
+  overflow: hidden;
+}
