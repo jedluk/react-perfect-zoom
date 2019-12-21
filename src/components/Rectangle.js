@@ -4,11 +4,10 @@ import {
   getLeftCoordinates,
   getRightCoordinates,
   getTopCoordinates
-} from './math/coordinates';
+} from '../lib/coordinates';
+import { isNumber } from '../lib/utils';
 
-const isNumber = x => typeof x === 'number';
-
-const Rectangle = ({ clickX, clickY, currentX, currentY }) => {
+const Rectangle = ({ positions: { clickX, clickY, currentX, currentY } }) => {
   if (!isNumber(clickX) || !isNumber(clickY)) {
     return null;
   }

@@ -1,3 +1,8 @@
+export const INITIAL_POSITION = {
+  x: null,
+  y: null
+};
+
 export const getTopCoordinates = (clickX, clickY, currentX, currentY) => ({
   top: Math.min(clickY, currentY),
   left: Math.min(clickX, currentX),
@@ -24,13 +29,13 @@ export const getLeftCoordinates = (clickX, clickY, currentX, currentY) => ({
 
 export const cropImage = (
   { naturalHeight, naturalWidth, clientHeight },
-  { posX, posY, clickX, clickY }
+  { currentX, currentY, clickX, clickY }
 ) => {
   const scale = naturalHeight / clientHeight;
   return {
-    marginTop: -Math.floor(Math.min(posY, clickY) * scale),
-    marginRight: -Math.floor(naturalWidth - Math.max(posX, clickX) * scale),
-    marginBottom: -Math.floor(naturalHeight - Math.max(posY, clickY) * scale),
-    marginLeft: -Math.floor(Math.min(posX, clickX) * scale)
+    marginTop: -Math.floor(Math.min(currentY, clickY) * scale),
+    marginRight: -Math.floor(naturalWidth - Math.max(currentX, clickX) * scale),
+    marginBottom: -Math.floor(naturalHeight - Math.max(currentY, clickY) * scale),
+    marginLeft: -Math.floor(Math.min(currentX, clickX) * scale)
   };
 };

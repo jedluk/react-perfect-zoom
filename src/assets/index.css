@@ -1,0 +1,36 @@
+.d-inline {
+  display: inline;
+}
+
+.zoom-top-border,
+.zoom-left-border,
+.zoom-right-border,
+.zoom-bottom-border {
+  position: absolute;
+  z-index: 10;
+  cursor: crosshair;
+  background-color: #66ff99;
+}
+
+.zoom-top-border,
+.zoom-bottom-border {
+  height: 2px;
+}
+
+.zoom-left-border,
+.zoom-right-border {
+  width: 2px;
+}
+
+.image-picker {
+  position: relative;
+  display: inline-block;
+}
+
+#k13x {
+  cursor: crosshair;
+}
+
+.zoom-container {
+  overflow: hidden;
+}
