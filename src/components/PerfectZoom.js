@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import * as PropTypes from 'prop-types';
 import { INITIAL_POSITION } from '../lib/coordinates';
+import { isNumber, inCloseRange } from '../lib/utils';
 import Thumbnail from './Thumbnail';
 import Zoom from './Zoom';
 import ClickInfo from './ClickInfo';
@@ -16,9 +17,20 @@ export default class PerfectZoom extends PureComponent {
     this.imgRef = React.createRef();
   }
 
+  handleLoadImage = () => {
+    this.imgRectangle = this.imgRef.current.getBoundingClientRect();
+  };
+
   handleMouseMove = (e) => {
-    const mousePosition = this.getCoordinates(e);
-    this.setState({ mousePosition });
+    if (this.isOutsideImageRectangle(e)) {
+      this.setState({
+        mousePosition: { ...INITIAL_POSITION },
+        clickPosition: { ...INITIAL_POSITION }
+      });
+    } else {
+      const mousePosition = this.getCoordinates(e);
+      this.setState({ mousePosition });
+    }
   };
 
   handleClick = (e) => {
@@ -26,17 +38,11 @@ export default class PerfectZoom extends PureComponent {
     this.setState({ clickPosition });
   };
 
-  handleReset = () =>
-    this.setState({
-      mousePosition: { ...INITIAL_POSITION },
-      clickPosition: { ...INITIAL_POSITION }
-    });
-
   getCoordinates = ({ pageX, pageY }) => {
     if (!this.imgRef.current) {
       return INITIAL_POSITION;
     }
-    const { x, y } = this.imgRef.current.getBoundingClientRect();
+    const { x, y } = this.imgRectangle;
     return { x: Math.floor(pageX - x), y: Math.floor(pageY - y) };
   };
 
@@ -47,33 +53,39 @@ export default class PerfectZoom extends PureComponent {
     currentY: this.state.mousePosition.y
   });
 
+  isOutsideImageRectangle = ({ pageX: x, pageY: y }) => {
+    const { right, left, top, bottom } = this.imgRectangle;
+    return (
+      inCloseRange(x, right) ||
+      inCloseRange(x, left) ||
+      inCloseRange(y, top) ||
+      inCloseRange(y, bottom)
+    );
+  };
+
   render() {
     const positions = this.getCurrentPositions();
     return (
       <>
-        <div>
-          <Thumbnail
-            ref={this.imgRef}
+        <Thumbnail
+          ref={this.imgRef}
+          source={this.props.source}
+          size={this.props.size}
+          positions={positions}
+          handleClick={this.handleClick}
+          handleMouseMove={this.handleMouseMove}
+          handleLoadImage={this.handleLoadImage}
+        />
+        <br />
+        {process.env.REACT_APP_DEBUG && <ClickInfo positions={positions} />}
+        {isNumber(positions.currentX) && (
+          <Zoom
+            imgRef={this.imgRef}
             source={this.props.source}
-            size={this.props.size}
-            handleClick={this.handleClick}
-            handleMouseMove={this.handleMouseMove}
-            handleReset={this.handleReset}
+            placement={this.props.placement}
             positions={positions}
           />
-          <br />
-          {process.env.REACT_APP_DEBUG && <ClickInfo positions={positions} />}
-        </div>
-        <div style={{ marginTop: 200 }}>
-          {Object.keys(positions).some(Boolean) && (
-            <Zoom
-              imgRef={this.imgRef}
-              source={this.props.source}
-              placement={this.props.placement}
-              positions={positions}
-            />
-          )}
-        </div>
+        )}
       </>
     );
   }
