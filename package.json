@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "perfect-zoom",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -30,5 +30,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "faker": "^4.1.0"
   }
 }

@@ -1,0 +1,45 @@
+.d-inline {
+  display: inline;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+.perfect-zoom-top-border,
+.perfect-zoom-left-border,
+.perfect-zoom-right-border,
+.perfect-zoom-bottom-border {
+  position: absolute;
+  z-index: 10;
+  cursor: crosshair;
+  background-color: #66ff99;
+}
+
+.perfect-zoom-top-border,
+.perfect-zoom-bottom-border {
+  height: 2px;
+}
+
+.perfect-zoom-left-border,
+.perfect-zoom-right-border {
+  width: 2px;
+}
+
+.perfect-zoom-image-picker {
+  position: relative;
+  display: inline-block;
+}
+
+#k13x {
+  cursor: crosshair;
+}
+
+.perfect-zoom-container {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  height: max-content;
+  width: max-content;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.75);
+}
