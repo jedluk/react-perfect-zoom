@@ -1,20 +1,37 @@
 import React from 'react';
-import { cropImage } from '../lib/coordinates';
+import * as PropTypes from 'prop-types';
+import { cropImage, getZoomContainerPosition } from '../lib/coordinates';
 import { isElement } from '../lib/utils';
 
-// zoom container should has absolute position??
-const Zoom = ({ source, imgRef, positions }) => (
+const Zoom = ({ source, imgRef, placement, positions }) => (
   <>
     {isElement(imgRef.current) && (
-      <div className="zoom-container">
+      <div
+        className="perfect-zoom-container"
+        style={{
+          [placement]: getZoomContainerPosition(imgRef.current, positions) - 20
+        }}
+      >
         <img
           src={source}
-          alt="realimage"
+          alt="realImage"
           style={cropImage(imgRef.current, positions)}
         />
       </div>
     )}
   </>
 );
+
+Zoom.propTypes = {
+  source: PropTypes.string,
+  imgRef: PropTypes.object,
+  placement: PropTypes.oneOf(['left', 'right']),
+  positions: PropTypes.shape({
+    clickX: PropTypes.number,
+    clickY: PropTypes.number,
+    posX: PropTypes.number,
+    posY: PropTypes.number
+  })
+};
 
 export default React.memo(Zoom);

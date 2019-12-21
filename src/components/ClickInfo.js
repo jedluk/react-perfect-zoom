@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import { isNumber } from '../lib/utils';
 
 const ClickInfo = ({ positions: { currentX, currentY, clickX, clickY } }) => (
@@ -15,5 +16,14 @@ const ClickInfo = ({ positions: { currentX, currentY, clickX, clickY } }) => (
     )}
   </>
 );
+
+ClickInfo.propTypes = {
+  positions: PropTypes.shape({
+    clickX: PropTypes.number,
+    clickY: PropTypes.number,
+    posX: PropTypes.number,
+    posY: PropTypes.number
+  })
+};
 
 export default React.memo(ClickInfo);

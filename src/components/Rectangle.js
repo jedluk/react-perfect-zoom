@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import * as PropTypes from 'prop-types';
 import {
   getBottomCoordinates,
   getLeftCoordinates,
@@ -7,30 +8,39 @@ import {
 } from '../lib/coordinates';
 import { isNumber } from '../lib/utils';
 
-const Rectangle = ({ positions: { clickX, clickY, currentX, currentY } }) => {
-  if (!isNumber(clickX) || !isNumber(clickY)) {
+const Rectangle = ({ positions }) => {
+  if (!isNumber(positions.clickX) || !isNumber(positions.clickY)) {
     return null;
   }
   return (
     <Fragment>
       <div
-        className="zoom-top-border"
-        style={getTopCoordinates(clickX, clickY, currentX, currentY)}
+        className="perfect-zoom-top-border"
+        style={getTopCoordinates(positions)}
       />
       <div
-        className="zoom-right-border"
-        style={getRightCoordinates(clickX, clickY, currentX, currentY)}
+        className="perfect-zoom-right-border"
+        style={getRightCoordinates(positions)}
       />
       <div
-        className="zoom-bottom-border"
-        style={getBottomCoordinates(clickX, clickY, currentX, currentY)}
+        className="perfect-zoom-bottom-border"
+        style={getBottomCoordinates(positions)}
       />
       <div
-        className="zoom-left-border"
-        style={getLeftCoordinates(clickX, clickY, currentX, currentY)}
+        className="perfect-zoom-left-border"
+        style={getLeftCoordinates(positions)}
       />
     </Fragment>
   );
+};
+
+Rectangle.propTypes = {
+  positions: PropTypes.shape({
+    clickX: PropTypes.number,
+    clickY: PropTypes.number,
+    currentX: PropTypes.number,
+    currentY: PropTypes.number
+  })
 };
 
 export default React.memo(Rectangle);

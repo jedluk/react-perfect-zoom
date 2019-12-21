@@ -4,7 +4,7 @@ import { isNumber } from '../lib/utils';
 import Rectangle from './Rectangle';
 
 const Thumbnail = React.forwardRef((props, ref) => (
-  <div className="image-picker">
+  <div className="perfect-zoom-image-picker">
     <img
       id="k13x"
       alt="main"
@@ -27,9 +27,11 @@ const Thumbnail = React.forwardRef((props, ref) => (
 ));
 
 Thumbnail.propTypes = {
+  handleLoadImage: PropTypes.func,
   handleClick: PropTypes.func,
   handleMouseMove: PropTypes.func,
   source: PropTypes.string,
+  size: PropTypes.arrayOf(PropTypes.number),
   positions: PropTypes.shape({
     clickX: PropTypes.number,
     clickY: PropTypes.number,
