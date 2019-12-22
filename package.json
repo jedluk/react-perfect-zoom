@@ -24,10 +24,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "NODE_ENV=production && rm -rf dist && mkdir dist && npx babel src --out-dir dist --copy-files",
+    "build": "NODE_ENV=production && rm -rf dist && mkdir dist && npx babel src --out-dir dist --copy-files --ignore ./src/**/*.spec.j",
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "npm:publish": "CI=true yarn test && yarn build"
+    "npm:publish": "CI=true yarn test && yarn build && yarn publish"
   },
   "eslintConfig": {
     "extends": "react-app"

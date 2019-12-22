@@ -4,7 +4,7 @@ React-perfect-zoom is React component which allow you to see exact part of image
 
 ![Alt Demo](https://raw.githubusercontent.com/jedluk/react-perfect-zoom/master/sample/demo.gif)
 
-Component is built without on create-react-app boilerplate any additional npm dependencies (either canvas element is not used). Please be aware that current version is first release and is just a germ of something bigger. A lot of ideas must be coded.
+Component is built with create-react-app boilerplate without additional npm dependencies (either canvas element is not used). Please be aware that current version is first release and is just a germ of something bigger. A lot of ideas must be coded.
 
 ## Instalation
 
@@ -41,7 +41,7 @@ const SomeComponent = (props) => (
 // source of thumbnail and real image; thumbnail will be scaled to desired size, real image show
 source: string
 
-// dimensions of thumnail
+// dimensions of thumbnail
 thumbnailSize: ?[number, number] = [300,500]
 
 // placement of real image
