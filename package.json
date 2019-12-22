@@ -17,17 +17,17 @@
     "url": "https://github.com/jedluk/react-perfect-zoom"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://registry.npmjs.org"
   },
   "bugs": {
     "url": "https://github.com/jedluk/react-perfect-zoom/issues"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "NODE_ENV=production && rm -rf dist && mkdir dist && npx babel src --out-dir dist --copy-files --ignore ./src/**/*.spec.js",
+    "build": "NODE_ENV=production && rm -rf dist && mkdir dist && npx babel src --ignore '**/*.spec.js' --out-dir dist --copy-files",
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "npm:publish": "CI=true yarn test && yarn build && yarn publish"
+    "npm:publish": "CI=true npm run test && npm run build && npm publish"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,7 +45,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",

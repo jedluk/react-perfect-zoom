@@ -2,11 +2,11 @@
 
 React-perfect-zoom is React component which allow you to see exact part of image thumbnail in real dimensions next to it. It's extremely useful i.e. when reading articles, viewing stuff on on-line shops etc. Placement of real image is determined by the user.
 
-![Alt Demo](https://raw.githubusercontent.com/jedluk/react-perfect-zoom/master/sample/demo.gif)
+![Alt Demo](https://raw.githubusercontent.com/jedluk/random/master/react-perfect-zoom/perfect_zoom_demo.gif)
 
 Component is built with create-react-app boilerplate without additional npm dependencies (either canvas element is not used). Please be aware that current version is first release and is just a germ of something bigger. A lot of ideas must be coded.
 
-## Instalation
+## Installation
 
 To install component run command in root of your project
 
@@ -14,7 +14,7 @@ To install component run command in root of your project
 npm install react-perfect-zoom
 ```
 
-There are no additional steps needed (like inserting css styles).
+There are no additional steps required (like inserting css styles).
 
 ## Usage
 
