@@ -3,26 +3,24 @@ import * as PropTypes from 'prop-types';
 import { isNumber } from '../lib/utils';
 import Rectangle from './Rectangle';
 
-const Thumbnail = React.forwardRef((props, ref) => (
+const Thumbnail = React.forwardRef(({ source, size, positions, ...func }, ref) => (
   <div className="perfect-zoom-image-picker">
     <img
       id="k13x"
       alt="main"
       ref={ref}
-      src={props.source}
+      src={source}
       style={{
-        maxHeight: props.size[0],
-        maxWidth: props.size[1]
+        maxHeight: size[0],
+        maxWidth: size[1]
       }}
-      onLoad={props.handleLoadImage}
-      onClick={props.handleClick}
-      {...(isNumber(props.positions.clickX) && {
-        onMouseMove: props.handleMouseMove
+      onLoad={func.handleLoadImage}
+      onClick={func.handleClick}
+      {...(isNumber(positions.clickX) && {
+        onMouseMove: func.handleMouseMove
       })}
     />
-    {Object.values(props.positions).some(Boolean) && (
-      <Rectangle positions={props.positions} />
-    )}
+    {Object.values(positions).some(Boolean) && <Rectangle positions={positions} />}
   </div>
 ));
 
