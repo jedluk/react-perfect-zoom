@@ -40,7 +40,7 @@ export const cropImage = (
   };
 };
 
-export const getZoomContainerPosition = (
+export const getZoomContainerDistance = (
   { naturalHeight, clientHeight },
   { currentX, clickX }
 ) => -Math.floor((Math.abs(currentX - clickX) * naturalHeight) / clientHeight);

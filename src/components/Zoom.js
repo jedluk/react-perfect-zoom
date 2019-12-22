@@ -1,6 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import { cropImage, getZoomContainerPosition } from '../lib/coordinates';
+import { cropImage, getZoomContainerDistance } from '../lib/coordinates';
 import { isElement } from '../lib/utils';
 
 const Zoom = ({ source, imgRef, placement, positions }) => (
@@ -9,7 +9,7 @@ const Zoom = ({ source, imgRef, placement, positions }) => (
       <div
         className="perfect-zoom-container"
         style={{
-          [placement]: getZoomContainerPosition(imgRef.current, positions) - 20
+          [placement]: getZoomContainerDistance(imgRef.current, positions) - 20
         }}
       >
         <img
