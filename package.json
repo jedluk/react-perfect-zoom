@@ -1,5 +1,9 @@
 {
   "name": "react-perfect-zoom",
+  "author": {
+    "name": "Jędrzej Łukasiuk",
+    "email": "jedrzej.lukasiuk@gmail.com"
+  },
   "version": "0.1.0",
   "main": "dist/index.js",
   "private": false,
@@ -56,5 +60,17 @@
       "env",
       "stage-2"
     ]
-  }
+  },
+  "keywords": [
+    "react",
+    "image",
+    "zoom",
+    "react zoom",
+    "image zoom",
+    "image enlarge",
+    "image enhancement",
+    "photo zoom",
+    "perfect zoom",
+    "react-perfect-zoom"
+  ]
 }
