@@ -3,4 +3,4 @@ export const isElement = (element) =>
 
 export const isNumber = (x) => typeof x === 'number';
 
-export const inCloseRange = (x, y) => Math.abs(x - y) <= 2;
+export const inCloseRange = (x, y) => Math.abs(x - y) <= 4;
