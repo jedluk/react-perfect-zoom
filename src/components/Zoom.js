@@ -5,7 +5,7 @@ import { isElement } from '../lib/utils';
 
 const Zoom = ({ source, imgRef, placement, positions }) => (
   <Fragment>
-    {isElement(imgRef.current) && (
+    {imgRef && isElement(imgRef.current) && (
       <div
         className="perfect-zoom-container"
         style={{
