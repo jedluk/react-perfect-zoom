@@ -6,7 +6,7 @@ React-perfect-zoom is React component which allow you to see exact part of image
 
 Component is built with create-react-app boilerplate without additional npm dependencies (either canvas element is not used). Please be aware that current version is first release and is just a germ of something bigger. A lot of ideas must be coded.
 
-## Instalation
+## Installation
 
 To install component run command in root of your project
 
@@ -14,7 +14,7 @@ To install component run command in root of your project
 npm install react-perfect-zoom
 ```
 
-There are no additional steps needed (like inserting css styles).
+There are no additional steps required (like inserting css styles).
 
 ## Usage
 
