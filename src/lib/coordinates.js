@@ -1,30 +1,57 @@
+import { isNumber, isString, getProperty } from './utils';
+
 export const INITIAL_POSITION = {
   x: null,
   y: null
 };
 
-export const getTopCoordinates = ({ currentX, currentY, clickX, clickY }) => ({
-  top: Math.min(clickY, currentY),
-  left: Math.min(clickX, currentX),
-  width: Math.abs(currentX - clickX)
+const FALLBACK_BORDER_SIZE = 2;
+
+const withCustomStyles = ({ size, color } = {}) => ({
+  ...(isNumber(size) && { height: size }),
+  ...(isString(color) && { backgroundColor: color })
 });
 
-export const getBottomCoordinates = ({ currentX, currentY, clickX, clickY }) => ({
+export const getTopCoordinates = (
+  { currentX, currentY, clickX, clickY },
+  style
+) => ({
+  top: Math.min(clickY, currentY),
+  left: Math.min(clickX, currentX),
+  width: Math.abs(currentX - clickX),
+  ...withCustomStyles(style)
+});
+
+export const getBottomCoordinates = (
+  { currentX, currentY, clickX, clickY },
+  style
+) => ({
   top: Math.max(clickY, currentY),
   left: Math.min(clickX, currentX),
-  width: Math.abs(currentX - clickX)
+  width: Math.abs(currentX - clickX),
+  ...withCustomStyles(style)
 });
 
-export const getRightCoordinates = ({ currentY, clickX, clickY }) => ({
+export const getRightCoordinates = (
+  { currentY, currentX, clickX, clickY },
+  style
+) => ({
   top: Math.min(clickY, currentY),
-  left: clickX,
-  height: Math.abs(currentY - clickY)
+  left:
+    Math.max(clickX, currentX) -
+    Number(getProperty(style, 'size') || FALLBACK_BORDER_SIZE),
+  height: Math.abs(currentY - clickY),
+  ...withCustomStyles(style)
 });
 
-export const getLeftCoordinates = ({ currentX, currentY, clickY }) => ({
+export const getLeftCoordinates = (
+  { currentX, currentY, clickX, clickY },
+  style
+) => ({
   top: Math.min(clickY, currentY),
-  left: currentX,
-  height: Math.abs(currentY - clickY)
+  left: Math.min(currentX, clickX),
+  height: Math.abs(currentY - clickY),
+  ...withCustomStyles(style)
 });
 
 export const cropImage = (
