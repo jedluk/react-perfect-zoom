@@ -57,3 +57,5 @@ Any kind of help is highly appreciated. Feel free to add any kind of issue and c
 - [ ] allow to show real image in any postion (including portal to given element)
 - [ ] distinguish between thumbnail source and real image source (+ load 'on demand')
 - [ ] allow to use custom classes (rectangle)
+- [ ] support for mobile devices (touch events)
+- [ ] remove scrollbars from body when zooming image
