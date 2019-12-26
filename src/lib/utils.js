@@ -11,7 +11,7 @@ export const inCloseRange = (x, y) => Math.abs(x - y) <= 4;
 
 export const getProperty = (obj, path, fallback) => {
   if (!isObject(obj) || !isString(path)) {
-    return;
+    return fallback;
   }
   const props = path.split('.');
   let value = obj[props.shift()];

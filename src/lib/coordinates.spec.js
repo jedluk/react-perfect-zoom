@@ -80,7 +80,7 @@ describe('coordinates module', () => {
         naturalHeight: 900,
         clientHeight: 500
       };
-      expect(getZoomContainerDistance(image, currentPositions)).toEqual(-27);
+      expect(getZoomContainerDistance(image, currentPositions)).toEqual(-47);
     });
   });
 });

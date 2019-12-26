@@ -7,8 +7,8 @@ export const INITIAL_POSITION = {
 
 const FALLBACK_BORDER_SIZE = 2;
 
-const withCustomStyles = ({ size, color } = {}) => ({
-  ...(isNumber(size) && { height: size }),
+const withCustomStyles = (prop, { size, color } = {}) => ({
+  ...(isNumber(size) && { [prop]: size }),
   ...(isString(color) && { backgroundColor: color })
 });
 
@@ -19,7 +19,7 @@ export const getTopCoordinates = (
   top: Math.min(clickY, currentY),
   left: Math.min(clickX, currentX),
   width: Math.abs(currentX - clickX),
-  ...withCustomStyles(style)
+  ...withCustomStyles('height', style)
 });
 
 export const getBottomCoordinates = (
@@ -29,7 +29,7 @@ export const getBottomCoordinates = (
   top: Math.max(clickY, currentY),
   left: Math.min(clickX, currentX),
   width: Math.abs(currentX - clickX),
-  ...withCustomStyles(style)
+  ...withCustomStyles('height', style)
 });
 
 export const getRightCoordinates = (
@@ -40,7 +40,7 @@ export const getRightCoordinates = (
   left:
     Math.max(clickX, currentX) - getProperty(style, 'size', FALLBACK_BORDER_SIZE),
   height: Math.abs(currentY - clickY),
-  ...withCustomStyles(style)
+  ...withCustomStyles('width', style)
 });
 
 export const getLeftCoordinates = (
@@ -50,7 +50,7 @@ export const getLeftCoordinates = (
   top: Math.min(clickY, currentY),
   left: Math.min(currentX, clickX),
   height: Math.abs(currentY - clickY),
-  ...withCustomStyles(style)
+  ...withCustomStyles('width', style)
 });
 
 export const cropImage = (
@@ -66,6 +66,7 @@ export const cropImage = (
   };
 };
 
+// 20 is fallback displacement between thumbnail and real image
 export const getZoomContainerDistance = (
   { naturalHeight, clientHeight },
   { currentX, clickX }
