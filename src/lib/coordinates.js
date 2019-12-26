@@ -38,8 +38,7 @@ export const getRightCoordinates = (
 ) => ({
   top: Math.min(clickY, currentY),
   left:
-    Math.max(clickX, currentX) -
-    Number(getProperty(style, 'size') || FALLBACK_BORDER_SIZE),
+    Math.max(clickX, currentX) - getProperty(style, 'size', FALLBACK_BORDER_SIZE),
   height: Math.abs(currentY - clickY),
   ...withCustomStyles(style)
 });
@@ -70,4 +69,4 @@ export const cropImage = (
 export const getZoomContainerDistance = (
   { naturalHeight, clientHeight },
   { currentX, clickX }
-) => -Math.floor((Math.abs(currentX - clickX) * naturalHeight) / clientHeight);
+) => -Math.floor((Math.abs(currentX - clickX) * naturalHeight) / clientHeight) - 20;

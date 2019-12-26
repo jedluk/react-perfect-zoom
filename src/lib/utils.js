@@ -9,7 +9,7 @@ export const isObject = (x) => typeof x === 'object' && x !== null;
 
 export const inCloseRange = (x, y) => Math.abs(x - y) <= 4;
 
-export const getProperty = (obj, path) => {
+export const getProperty = (obj, path, fallback) => {
   if (!isObject(obj) || !isString(path)) {
     return;
   }
@@ -18,5 +18,5 @@ export const getProperty = (obj, path) => {
   while (props.length > 0) {
     value = value[props.shift()];
   }
-  return value;
+  return value || fallback;
 };

@@ -65,7 +65,13 @@ export default class PerfectZoom extends PureComponent {
   };
 
   render() {
-    const { source, thumbnailSize, rectangleStyles, placement } = this.props;
+    const {
+      source,
+      thumbnailSize,
+      translate,
+      rectangleStyles,
+      placement
+    } = this.props;
     const positions = this.getCurrentPositions();
     return (
       <div className="pos-relative">
@@ -88,6 +94,7 @@ export default class PerfectZoom extends PureComponent {
             imgRef={this.imgRef}
             source={source}
             placement={placement}
+            translate={translate}
             positions={positions}
           />
         )}
@@ -101,8 +108,12 @@ PerfectZoom.propTypes = {
   thumbnailSize: PropTypes.arrayOf(PropTypes.number),
   placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
   rectangleStyles: PropTypes.shape({
-    color: PropTypes.oneOf([null, PropTypes.string]),
+    color: PropTypes.string,
     size: PropTypes.number
+  }),
+  translate: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number
   })
 };
 
