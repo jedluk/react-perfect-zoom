@@ -1,10 +1,10 @@
-# React perfect zoom
+# React-perfect-zoom [![npm](https://img.shields.io/npm/v/react-perfect-zoom.svg)](https://www.npmjs.com/package/react-perfect-zoom) [![npm downloads](https://img.shields.io/npm/dm/react-perfect-zoom.svg)](https://www.npmjs.com/package/react-perfect-zoom)
 
-React-perfect-zoom is React component which allow you to see exact part of image thumbnail in real dimensions next to it. It's extremely useful i.e. when reading articles, viewing stuff on on-line shops etc. Placement of real image is determined by the user.
+React component which allow you to see exact part of image thumbnail in real dimensions next to it.
 
 ![Alt Demo](https://raw.githubusercontent.com/jedluk/random/master/react-perfect-zoom/perfect_zoom_demo.gif)
 
-Component is built with create-react-app boilerplate without additional npm dependencies (either canvas element is not used). Please be aware that current version is first release and is just a germ of something bigger. A lot of ideas must be coded.
+Component is built in pure React without additional npm dependencies (either canvas element is not used). Widge range of props let you display original image exactly where you want it. Currently working on mobile device support.
 
 ## Installation
 
@@ -25,7 +25,19 @@ import PerfectZoom from 'react-perfect-zoom';
 
 const SomeComponent = (props) => (
   <div style={{ display: 'flex', margin: 20 }}>
-    <PerfectZoom placement="right" source={sample} thumbnailSize={[300, 500]} />
+    <PerfectZoom
+        placement="right"
+        source={sample}
+        thumbnailSize={[300, 500]}
+        rectangleStyles={{
+            color: '#cc00cc'
+            size: 3
+        }}
+        translate={{
+            x: 200,
+            y: 100
+        }}
+    />
     <p> lorem ipsum (...) Cras et maximus lectus. </p>
   </div>
 );
@@ -39,13 +51,20 @@ const SomeComponent = (props) => (
 //
 
 // source of thumbnail and real image; thumbnail will be scaled to desired size, real image show
-source: string
+source: !string
 
 // dimensions of thumbnail
 thumbnailSize: ?[number, number] = [300,500]
 
 // placement of real image
-placement: ('left' | 'right') = 'right'
+placement: ?('left' | 'right' | 'top' | 'bottom') = 'right'
+
+// translation of real from its original position
+translate: ?{ x: number, y: number } // translation of real from its original position
+
+// styles applied to rectangle
+rectangleStyles: ?{ color: string, size: number }
+
 ```
 
 ## Contribute
@@ -54,8 +73,10 @@ Any kind of help is highly appreciated. Feel free to add any kind of issue and c
 
 ## TODO LIST
 
-- [ ] allow to show real image in any postion (including portal to given element)
+- [x] allow to show real image in any postion
+- [ ] allow to use React Portal when showing original image
 - [ ] distinguish between thumbnail source and real image source (+ load 'on demand')
-- [ ] allow to use custom classes (rectangle)
+- [x] allow to use custom classes (rectangle)
 - [ ] support for mobile devices (touch events)
 - [ ] remove scrollbars from body when zooming image
+- [ ] allow to download cropped image
