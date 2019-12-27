@@ -7,14 +7,6 @@
   "version": "0.1.0",
   "main": "dist/index.js",
   "private": false,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
-  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -27,11 +19,9 @@
     "url": "https://github.com/jedluk/react-perfect-zoom/issues"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "NODE_ENV=production && rm -rf dist && mkdir dist && npx babel src --ignore '**/*.spec.js' --out-dir dist --copy-files",
-    "test": "react-scripts test --coverage",
-    "eject": "react-scripts eject",
-    "npm:publish": "CI=true npm run test && npm run build && npm publish"
+    "test": "jest --coverage",
+    "npm:publish": "npm run test && npm run build && npm publish"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,17 +38,34 @@
       "last 1 safari version"
     ]
   },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "dependencies": {},
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1"
+    "babel-jest": "^24.9.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^24.9.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-test-renderer": "^16.12.0"
   },
   "babel": {
     "presets": [
-      "react",
-      "env",
-      "stage-2"
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "transform-class-properties",
+      "transform-object-rest-spread"
     ]
   },
   "keywords": [
@@ -71,6 +78,17 @@
     "image enhancement",
     "photo zoom",
     "perfect zoom",
-    "react-perfect-zoom"
-  ]
+    "react perfect zoom"
+  ],
+  "jest": {
+    "verbose": true,
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json"
+    ],
+    "setupFilesAfterEnv": [
+      "./src/setupTests.js"
+    ]
+  }
 }
