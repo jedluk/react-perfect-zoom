@@ -82,7 +82,6 @@ export default class PerfectZoom extends PureComponent {
           handleClick={this.handleClick}
           handleMouseMove={this.handleMouseMove}
         />
-        <br />
         {getProperty(process, 'env.REACT_APP_PERFECT_ZOOM_DEBUG', false) && (
           <ClickInfo positions={positions} />
         )}

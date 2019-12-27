@@ -4,6 +4,7 @@ import { isNumber } from '../lib/utils';
 
 const ClickInfo = ({ positions: { currentX, currentY, clickX, clickY } }) => (
   <Fragment>
+    <br />
     {isNumber(currentX) && (
       <h4 className="d-inline">
         Current position ({currentX}, {currentY})
