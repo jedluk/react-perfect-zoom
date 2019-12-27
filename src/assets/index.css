@@ -29,6 +29,7 @@
 .perfect-zoom-image-picker {
   position: relative;
   display: inline-block;
+  z-index: 15;
 }
 
 #k13x {
@@ -38,7 +39,6 @@
 .perfect-zoom-container {
   position: absolute;
   overflow: hidden;
-  top: 0;
   height: max-content;
   width: max-content;
   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.75);
