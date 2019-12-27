@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import * as PropTypes from 'prop-types';
 import { INITIAL_POSITION } from '../lib/rectangleCoordinates';
-import { isNumber, inCloseRange } from '../lib/utils';
+import { isNumber, inCloseRange, getProperty } from '../lib/utils';
 import Thumbnail from './Thumbnail';
 import Zoom from './Zoom';
 import ClickInfo from './ClickInfo';
@@ -83,7 +83,7 @@ export default class PerfectZoom extends PureComponent {
           handleMouseMove={this.handleMouseMove}
         />
         <br />
-        {process.env.REACT_APP_PERFECT_ZOOM_DEBUG && (
+        {getProperty(process, 'env.REACT_APP_PERFECT_ZOOM_DEBUG', false) && (
           <ClickInfo positions={positions} />
         )}
         {isNumber(positions.currentX) && (
