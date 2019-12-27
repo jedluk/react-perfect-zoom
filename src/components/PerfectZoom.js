@@ -18,10 +18,6 @@ export default class PerfectZoom extends PureComponent {
     this.imgRectangle = {};
   }
 
-  handleLoadImage = () => {
-    this.imgRectangle = this.imgRef.current.getBoundingClientRect();
-  };
-
   handleMouseMove = (e) => {
     if (this.isOutsideImageRectangle(e)) {
       this.setState({
@@ -35,6 +31,7 @@ export default class PerfectZoom extends PureComponent {
   };
 
   handleClick = (e) => {
+    this.imgRectangle = this.imgRef.current.getBoundingClientRect();
     const clickPosition = this.getCoordinates(e);
     this.setState({ clickPosition });
   };
@@ -83,7 +80,6 @@ export default class PerfectZoom extends PureComponent {
           rectangleStyles={rectangleStyles}
           handleClick={this.handleClick}
           handleMouseMove={this.handleMouseMove}
-          handleLoadImage={this.handleLoadImage}
         />
         <br />
         {process.env.REACT_APP_PERFECT_ZOOM_DEBUG && (

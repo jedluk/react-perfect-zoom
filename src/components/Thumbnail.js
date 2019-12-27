@@ -15,7 +15,6 @@ const Thumbnail = React.forwardRef(
           maxHeight: size[0],
           maxWidth: size[1]
         }}
-        onLoad={func.handleLoadImage}
         onClick={func.handleClick}
         {...(isNumber(positions.clickX) && {
           onMouseMove: func.handleMouseMove
