@@ -1,4 +1,4 @@
-import { inCloseRange, isNumber } from './utils';
+import { inCloseRange, isNumber, isObject, isString, getProperty } from './utils';
 
 describe('utils module', () => {
   describe('inCloseRange function', () => {
@@ -26,6 +26,47 @@ describe('utils module', () => {
       expect(isNumber(undefined)).toBeFalsy();
       expect(isNumber({})).toBeFalsy();
       expect(isNumber([])).toBeFalsy();
+    });
+  });
+  describe('isString function', () => {
+    it('retrun true when argument is a string', () => {
+      expect(isString('qwerty')).toBeTruthy();
+    });
+    it('return false when argument is not a string', () => {
+      expect(isString(1)).toBeFalsy();
+      expect(isString(true)).toBeFalsy();
+      expect(isString(null)).toBeFalsy();
+      expect(isString(undefined)).toBeFalsy();
+      expect(isString([])).toBeFalsy();
+      expect(isString({})).toBeFalsy();
+    });
+  });
+  describe('isObject function', () => {
+    it('retrun true when argument is an object', () => {
+      expect(isObject({})).toBeTruthy();
+      expect(isObject(null)).toBeFalsy();
+    });
+    it('return false when argument is not an object', () => {
+      expect(isObject(1)).toBeFalsy();
+      expect(isObject(true)).toBeFalsy();
+      expect(isObject('dqwd')).toBeFalsy();
+      expect(isObject(undefined)).toBeFalsy();
+    });
+  });
+  describe('getProperty function', () => {
+    const obj = {
+      level1: {
+        level2: 3
+      }
+    };
+    it('retrun property of object', () => {
+      expect(getProperty(obj, 'level1.level2')).toEqual(3);
+    });
+    it('retrun undefined when object does not contain given property', () => {
+      expect(getProperty(obj, 'efwefw')).toBeUndefined();
+    });
+    it('retrun undefined when arguments do not match', () => {
+      expect(getProperty('nothing', 'efwefw')).toBeUndefined();
     });
   });
 });

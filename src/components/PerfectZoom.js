@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import * as PropTypes from 'prop-types';
-import { INITIAL_POSITION } from '../lib/coordinates';
-import { isNumber, inCloseRange } from '../lib/utils';
+import { INITIAL_POSITION } from '../lib/rectangleCoordinates';
+import { isNumber, inCloseRange, getProperty } from '../lib/utils';
 import Thumbnail from './Thumbnail';
 import Zoom from './Zoom';
 import ClickInfo from './ClickInfo';
@@ -18,10 +18,6 @@ export default class PerfectZoom extends PureComponent {
     this.imgRectangle = {};
   }
 
-  handleLoadImage = () => {
-    this.imgRectangle = this.imgRef.current.getBoundingClientRect();
-  };
-
   handleMouseMove = (e) => {
     if (this.isOutsideImageRectangle(e)) {
       this.setState({
@@ -35,13 +31,17 @@ export default class PerfectZoom extends PureComponent {
   };
 
   handleClick = (e) => {
+    this.imgRectangle = this.imgRef.current.getBoundingClientRect();
     const clickPosition = this.getCoordinates(e);
     this.setState({ clickPosition });
   };
 
   getCoordinates = ({ pageX, pageY }) => {
     const { x, y } = this.imgRectangle;
-    return { x: Math.floor(pageX - x), y: Math.floor(pageY - y) };
+    return {
+      x: Math.floor(pageX - x),
+      y: Math.floor(pageY - y)
+    };
   };
 
   getCurrentPositions = () => ({
@@ -62,27 +62,36 @@ export default class PerfectZoom extends PureComponent {
   };
 
   render() {
+    const {
+      source,
+      thumbnailSize,
+      translate,
+      margin,
+      rectangleStyles,
+      placement
+    } = this.props;
     const positions = this.getCurrentPositions();
     return (
       <div className="pos-relative">
         <Thumbnail
           ref={this.imgRef}
-          source={this.props.source}
-          size={this.props.thumbnailSize}
+          source={source}
+          size={thumbnailSize}
           positions={positions}
+          rectangleStyles={rectangleStyles}
           handleClick={this.handleClick}
           handleMouseMove={this.handleMouseMove}
-          handleLoadImage={this.handleLoadImage}
         />
-        <br />
-        {process.env.REACT_APP_PERFECT_ZOOM_DEBUG && (
+        {getProperty(process, 'env.REACT_APP_PERFECT_ZOOM_DEBUG', false) && (
           <ClickInfo positions={positions} />
         )}
         {isNumber(positions.currentX) && (
           <Zoom
             imgRef={this.imgRef}
-            source={this.props.source}
-            placement={this.props.placement}
+            source={source}
+            placement={placement}
+            translate={translate}
+            margin={margin}
             positions={positions}
           />
         )}
@@ -94,10 +103,20 @@ export default class PerfectZoom extends PureComponent {
 PerfectZoom.propTypes = {
   source: PropTypes.string.isRequired,
   thumbnailSize: PropTypes.arrayOf(PropTypes.number),
-  placement: PropTypes.oneOf(['left', 'right'])
+  placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
+  margin: PropTypes.number,
+  rectangleStyles: PropTypes.shape({
+    color: PropTypes.string,
+    size: PropTypes.number
+  }),
+  translate: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number
+  })
 };
 
 PerfectZoom.defaultProps = {
   placement: 'right',
-  size: [300, 500]
+  size: [300, 500],
+  margin: 20
 };

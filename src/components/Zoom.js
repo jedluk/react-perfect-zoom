@@ -1,16 +1,17 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
-import { cropImage, getZoomContainerDistance } from '../lib/coordinates';
+import { withTranslation, getPlacementFunction } from '../lib/placement';
+import { cropImage } from '../lib/crop';
 import { isElement } from '../lib/utils';
 
-const Zoom = ({ source, imgRef, placement, positions }) => (
+const Zoom = ({ imgRef, source, placement, positions, translate, margin = 20 }) => (
   <Fragment>
     {isElement(imgRef.current) && (
       <div
         className="perfect-zoom-container"
-        style={{
-          [placement]: getZoomContainerDistance(imgRef.current, positions) - 20
-        }}
+        style={withTranslation(translate)(
+          getPlacementFunction(placement)(imgRef.current, positions, margin)
+        )}
       >
         <img
           src={source}
@@ -25,7 +26,7 @@ const Zoom = ({ source, imgRef, placement, positions }) => (
 Zoom.propTypes = {
   source: PropTypes.string,
   imgRef: PropTypes.object,
-  placement: PropTypes.oneOf(['left', 'right']),
+  placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
   positions: PropTypes.shape({
     clickX: PropTypes.number,
     clickY: PropTypes.number,
