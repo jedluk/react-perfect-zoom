@@ -29,6 +29,7 @@ const SomeComponent = (props) => (
         placement="right"
         source={sample}
         thumbnailSize={[300, 500]}
+        margin={10}
         rectangleStyles={{
             color: '#cc00cc'
             size: 3
@@ -50,20 +51,24 @@ const SomeComponent = (props) => (
 // Basic props
 //
 
-// source of thumbnail and real image; thumbnail will be scaled to desired size, real image show
-source: !string
+// source of thumbnail and real image; thumbnail will be scaled to desired size, real image is shown without scaling
+source: string
 
 // dimensions of thumbnail
-thumbnailSize: ?[number, number] = [300,500]
+thumbnailSize: ?[number, number] = [300,500] // height go first
 
 // placement of real image
 placement: ?('left' | 'right' | 'top' | 'bottom') = 'right'
 
+// margin between thumbnail and real image
+margin: ?number = 20
+
 // translation of real from its original position
-translate: ?{ x: number, y: number } // translation of real from its original position
+translate: ?{ x: number, y: number }
 
 // styles applied to rectangle
 rectangleStyles: ?{ color: string, size: number }
+
 
 ```
 
