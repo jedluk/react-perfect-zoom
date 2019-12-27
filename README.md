@@ -4,7 +4,7 @@ React component which allow you to see exact part of image thumbnail in real dim
 
 ![Alt Demo](https://raw.githubusercontent.com/jedluk/random/master/react-perfect-zoom/perfect_zoom_demo.gif)
 
-Component is built in pure React without additional npm dependencies (either canvas element is not used). Widge range of props let you display original image exactly where you want it. Currently working on mobile device support.
+Demo available here: https://jedluk.github.io/react-perfect-zoom-playground/ . Component is built in pure React without additional npm dependencies (either canvas element is not used). Widge range of props let you display original image exactly where you want it. Currently working on mobile device support.
 
 ## Installation
 
