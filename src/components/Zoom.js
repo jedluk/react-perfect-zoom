@@ -4,13 +4,13 @@ import { withTranslation, getPlacementFunction } from '../lib/placement';
 import { cropImage } from '../lib/crop';
 import { isElement } from '../lib/utils';
 
-const Zoom = ({ source, imgRef, placement, positions, translate }) => (
+const Zoom = ({ imgRef, source, placement, positions, translate, margin = 20 }) => (
   <Fragment>
     {isElement(imgRef.current) && (
       <div
         className="perfect-zoom-container"
         style={withTranslation(translate)(
-          getPlacementFunction(placement)(imgRef.current, positions)
+          getPlacementFunction(placement)(imgRef.current, positions, margin)
         )}
       >
         <img

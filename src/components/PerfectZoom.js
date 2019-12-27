@@ -66,6 +66,7 @@ export default class PerfectZoom extends PureComponent {
       source,
       thumbnailSize,
       translate,
+      margin,
       rectangleStyles,
       placement
     } = this.props;
@@ -91,6 +92,7 @@ export default class PerfectZoom extends PureComponent {
             source={source}
             placement={placement}
             translate={translate}
+            margin={margin}
             positions={positions}
           />
         )}
@@ -103,6 +105,7 @@ PerfectZoom.propTypes = {
   source: PropTypes.string.isRequired,
   thumbnailSize: PropTypes.arrayOf(PropTypes.number),
   placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
+  margin: PropTypes.number,
   rectangleStyles: PropTypes.shape({
     color: PropTypes.string,
     size: PropTypes.number
@@ -115,5 +118,6 @@ PerfectZoom.propTypes = {
 
 PerfectZoom.defaultProps = {
   placement: 'right',
-  size: [300, 500]
+  size: [300, 500],
+  margin: 20
 };
