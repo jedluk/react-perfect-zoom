@@ -13,31 +13,31 @@ export const withTranslation = (translate) => (obj) => ({
 
 export const getPlacementFunction = (placement) =>
   ({
-    right(image, positions, fallbackMargin = 20) {
+    right(image, positions, margin = 20) {
       return {
         top: 0,
-        left: image.clientWidth + fallbackMargin
+        left: image.clientWidth + margin
       };
     },
-    left(image, positions, fallbackMargin = 20) {
+    left(image, positions, margin = 20) {
       return {
         top: 0,
         left:
-          -fallbackMargin -
+          -margin -
           getHorizontalDistance(image.naturalHeight / image.clientHeight, positions)
       };
     },
-    top(image, positions, fallbackMargin = 20) {
+    top(image, positions, margin = 20) {
       return {
         top:
-          -fallbackMargin -
+          -margin -
           getVerticaDistance(image.naturalHeight / image.clientHeight, positions),
         left: 0
       };
     },
-    bottom(image, positions, fallbackMargin = 20) {
+    bottom(image, positions, margin = 20) {
       return {
-        top: image.clientHeight + fallbackMargin,
+        top: image.clientHeight + margin,
         left: 0
       };
     }

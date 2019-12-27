@@ -2,9 +2,8 @@ import {
   getBottomCoordinates,
   getLeftCoordinates,
   getTopCoordinates,
-  getRightCoordinates,
-  getHorizontalContainerDistance
-} from './coordinates';
+  getRightCoordinates
+} from './rectangleCoordinates';
 
 describe('coordinates module', () => {
   const currentPositions = {

@@ -1,3 +1,5 @@
+import { cropImage } from './crop';
+
 describe('cropImage function', () => {
   const currentPositions = {
     currentX: 25,
