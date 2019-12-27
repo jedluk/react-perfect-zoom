@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import * as PropTypes from 'prop-types';
-import { INITIAL_POSITION } from '../lib/coordinates';
+import { INITIAL_POSITION } from '../lib/rectangleCoordinates';
 import { isNumber, inCloseRange } from '../lib/utils';
 import Thumbnail from './Thumbnail';
 import Zoom from './Zoom';

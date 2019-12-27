@@ -5,7 +5,7 @@ import {
   getRightCoordinates,
   getBottomCoordinates,
   getLeftCoordinates
-} from '../lib/coordinates';
+} from '../lib/rectangleCoordinates';
 import { isNumber } from '../lib/utils';
 
 const Rectangle = ({ positions, rectangleStyles }) => {

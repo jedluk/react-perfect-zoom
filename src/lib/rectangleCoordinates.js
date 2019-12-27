@@ -52,22 +52,3 @@ export const getLeftCoordinates = (
   height: Math.abs(currentY - clickY),
   ...withCustomStyles('width', style)
 });
-
-export const cropImage = (
-  { naturalHeight, naturalWidth, clientHeight },
-  { currentX, currentY, clickX, clickY }
-) => {
-  const scale = naturalHeight / clientHeight;
-  return {
-    marginTop: -Math.floor(Math.min(currentY, clickY) * scale),
-    marginRight: -Math.floor(naturalWidth - Math.max(currentX, clickX) * scale),
-    marginBottom: -Math.floor(naturalHeight - Math.max(currentY, clickY) * scale),
-    marginLeft: -Math.floor(Math.min(currentX, clickX) * scale)
-  };
-};
-
-// 20 is fallback displacement between thumbnail and real image
-export const getZoomContainerDistance = (
-  { naturalHeight, clientHeight },
-  { currentX, clickX }
-) => -Math.floor((Math.abs(currentX - clickX) * naturalHeight) / clientHeight) - 20;
