@@ -24,6 +24,7 @@ export default class PerfectZoom extends PureComponent {
         mousePosition: { ...INITIAL_POSITION },
         clickPosition: { ...INITIAL_POSITION }
       });
+      this.toggleBodyVisibility('auto');
     } else {
       const mousePosition = this.getCoordinates(e);
       this.setState({ mousePosition });
@@ -31,6 +32,7 @@ export default class PerfectZoom extends PureComponent {
   };
 
   handleClick = (e) => {
+    this.toggleBodyVisibility('hidden');
     this.imgRectangle = this.imgRef.current.getBoundingClientRect();
     const clickPosition = this.getCoordinates(e);
     this.setState({ clickPosition });
@@ -59,6 +61,16 @@ export default class PerfectZoom extends PureComponent {
       inCloseRange(y, top) ||
       inCloseRange(y, bottom)
     );
+  };
+
+  toggleBodyVisibility = (value) => {
+    const { scrollHeight, scrollWidth } = document.body;
+    if (scrollHeight <= window.innerHeight) {
+      document.body.style.overflowY = value;
+    }
+    if (scrollWidth <= window.innerWidth) {
+      document.body.style.overflowX = value;
+    }
   };
 
   render() {
