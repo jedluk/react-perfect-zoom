@@ -32,7 +32,7 @@
   z-index: 15;
 }
 
-#k13x {
+.perfect-zoom-image-picker>img:first-child {
   cursor: crosshair;
 }
 

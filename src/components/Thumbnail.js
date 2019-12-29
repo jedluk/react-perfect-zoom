@@ -7,8 +7,7 @@ const Thumbnail = React.forwardRef(
   ({ source, size, positions, rectangleStyles, ...func }, ref) => (
     <div className="perfect-zoom-image-picker">
       <img
-        id="k13x"
-        alt="main"
+        alt="thumbnail"
         ref={ref}
         src={source}
         style={{
@@ -38,6 +37,10 @@ Thumbnail.propTypes = {
     clickY: PropTypes.number,
     posX: PropTypes.number,
     posY: PropTypes.number
+  }),
+  rectangleStyles: PropTypes.shape({
+    color: PropTypes.string,
+    size: PropTypes.number
   })
 };
 

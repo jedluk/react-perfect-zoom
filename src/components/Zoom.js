@@ -32,7 +32,12 @@ Zoom.propTypes = {
     clickY: PropTypes.number,
     posX: PropTypes.number,
     posY: PropTypes.number
-  })
+  }),
+  translate: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number
+  }),
+  margin: PropTypes.number
 };
 
 export default React.memo(Zoom);
