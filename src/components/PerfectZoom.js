@@ -16,6 +16,12 @@ export default class PerfectZoom extends PureComponent {
     };
     this.imgRef = React.createRef();
     this.imgRectangle = {};
+    this.initialBodyOverflow = {};
+  }
+
+  componentDidMount() {
+    const { overflowX, overflowY } = document.body.style;
+    this.initialBodyOverflow = { overflowX, overflowY };
   }
 
   handleMouseMove = (e) => {
@@ -24,7 +30,7 @@ export default class PerfectZoom extends PureComponent {
         mousePosition: { ...INITIAL_POSITION },
         clickPosition: { ...INITIAL_POSITION }
       });
-      this.toggleBodyVisibility('auto');
+      this.toggleBodyVisibility(this.initialBodyOverflow);
     } else {
       const mousePosition = this.getCoordinates(e);
       this.setState({ mousePosition });
@@ -32,8 +38,8 @@ export default class PerfectZoom extends PureComponent {
   };
 
   handleClick = (e) => {
-    this.toggleBodyVisibility('hidden');
     this.imgRectangle = this.imgRef.current.getBoundingClientRect();
+    this.toggleBodyVisibility({ overflowX: 'hidden', overflowY: 'hidden' });
     const clickPosition = this.getCoordinates(e);
     this.setState({ clickPosition });
   };
@@ -46,13 +52,6 @@ export default class PerfectZoom extends PureComponent {
     };
   };
 
-  getCurrentPositions = () => ({
-    clickX: this.state.clickPosition.x,
-    clickY: this.state.clickPosition.y,
-    currentX: this.state.mousePosition.x,
-    currentY: this.state.mousePosition.y
-  });
-
   isOutsideImageRectangle = ({ pageX: x, pageY: y }) => {
     const { right, left, top, bottom } = this.imgRectangle;
     return (
@@ -63,15 +62,22 @@ export default class PerfectZoom extends PureComponent {
     );
   };
 
-  toggleBodyVisibility = (value) => {
-    const { scrollHeight, scrollWidth } = document.body;
-    if (scrollHeight <= window.innerHeight) {
-      document.body.style.overflowY = value;
+  toggleBodyVisibility = ({ overflowX, overflowY }) => {
+    const { documentElement: elem } = document;
+    if (elem.scrollHeight <= elem.clientHeight) {
+      document.body.style.overflowY = overflowY;
     }
-    if (scrollWidth <= window.innerWidth) {
-      document.body.style.overflowX = value;
+    if (elem.scrollWidth <= elem.clientWidth) {
+      document.body.style.overflowX = overflowX;
     }
   };
+
+  getCurrentPositions = () => ({
+    clickX: this.state.clickPosition.x,
+    clickY: this.state.clickPosition.y,
+    currentX: this.state.mousePosition.x,
+    currentY: this.state.mousePosition.y
+  });
 
   render() {
     const {
