@@ -40,6 +40,10 @@ Rectangle.propTypes = {
     clickY: PropTypes.number,
     currentX: PropTypes.number,
     currentY: PropTypes.number
+  }),
+  rectangleStyles: PropTypes.shape({
+    color: PropTypes.string,
+    size: PropTypes.number
   })
 };
 

@@ -38,6 +38,10 @@ Thumbnail.propTypes = {
     clickY: PropTypes.number,
     posX: PropTypes.number,
     posY: PropTypes.number
+  }),
+  rectangleStyles: PropTypes.shape({
+    color: PropTypes.string,
+    size: PropTypes.number
   })
 };
 
