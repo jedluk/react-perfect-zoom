@@ -3,6 +3,7 @@ import * as PropTypes from 'prop-types';
 import { withTranslation, getPlacementFunction } from '../lib/placement';
 import { cropImage } from '../lib/crop';
 import { isElement } from '../lib/utils';
+import Canvas from './Canvas';
 
 const Zoom = ({ imgRef, source, placement, positions, translate, margin = 20 }) => (
   <Fragment>
@@ -13,6 +14,7 @@ const Zoom = ({ imgRef, source, placement, positions, translate, margin = 20 }) 
           getPlacementFunction(placement)(imgRef.current, positions, margin)
         )}
       >
+        <Canvas image={imgRef.current} positions={positions} />
         <img
           src={source}
           alt="realImage"
