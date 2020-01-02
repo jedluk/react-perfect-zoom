@@ -1,11 +1,7 @@
 import React from 'react';
 import { INITIAL_POSITION } from '../../lib/rectangleCoordinates';
-import {
-  getRelativeCoordinates,
-  getPositions,
-  toggleBodyVisibility,
-  isOutsideImageRectangle
-} from './mixins';
+import { getRelativeCoordinates, getPositions, isOutsideImageRectangle } from './mixins';
+import { stopBodyScrolling } from './mixins';
 import { isNumber } from '../../lib/utils';
 
 const EXIT_MARGIN = 10;
@@ -37,7 +33,6 @@ export default function withTouchEvents(Component) {
     }
 
     handleTouchStart = (e) => {
-      document.documentElement.style.overflow = 'hidden';
       this.thumbnailRect = this.imageRef.current.getBoundingClientRect();
       const startPosition = getRelativeCoordinates(this.thumbnailRect, e.touches[0]);
       this.setState({ startPosition });
@@ -56,7 +51,6 @@ export default function withTouchEvents(Component) {
     };
 
     handleTouchEnd = () => {
-      document.documentElement.style.overflow = 'auto';
       this.setState({
         startPosition: { ...INITIAL_POSITION },
         currentPosition: { ...INITIAL_POSITION }
