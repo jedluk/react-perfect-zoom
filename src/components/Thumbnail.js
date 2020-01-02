@@ -1,10 +1,9 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import { isNumber } from '../lib/utils';
 import Rectangle from './Rectangle';
 
 const Thumbnail = React.forwardRef(
-  ({ source, size, positions, rectangleStyles, ...func }, ref) => (
+  ({ source, size, positions, rectangleStyles, events }, ref) => (
     <div className="perfect-zoom-image-picker">
       <img
         alt="thumbnail"
@@ -14,10 +13,7 @@ const Thumbnail = React.forwardRef(
           maxHeight: size[0],
           maxWidth: size[1]
         }}
-        onClick={func.handleClick}
-        {...(isNumber(positions.clickX) && {
-          onMouseMove: func.handleMouseMove
-        })}
+        {...events}
       />
       {Object.values(positions).some(Boolean) && (
         <Rectangle rectangleStyles={rectangleStyles} positions={positions} />
