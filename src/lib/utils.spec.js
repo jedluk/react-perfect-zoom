@@ -1,17 +1,17 @@
-import { inCloseRange, isNumber, isObject, isString, getProperty } from './utils';
+import { inRange, isNumber, isObject, isString, getProperty } from './utils';
 
 describe('utils module', () => {
   describe('inCloseRange function', () => {
-    it('return true when distance between two numbers is less or equal than 4', () => {
-      expect(inCloseRange(5, 1)).toBeTruthy();
-      expect(inCloseRange(1, 2)).toBeTruthy();
+    it('return true when distance between two numbers is less or equal than defined', () => {
+      expect(inRange(10)(5, 1)).toBeTruthy();
+      expect(inRange(-5, 3)).toBeTruthy();
     });
-    it('return true when distance between two numbers is grater than 4', () => {
-      expect(inCloseRange(6, 1)).toBeFalsy();
-      expect(inCloseRange(10, 1)).toBeFalsy();
+    it('return false when distance between two numbers is grater than defined', () => {
+      expect(inRange(10)(16, 1)).toBeFalsy();
+      expect(inRange(10)(-10, 10)).toBeFalsy();
     });
     it('return false when argument is not a number', () => {
-      expect(inCloseRange(4, 'xyz')).toBeFalsy();
+      expect(inRange(4)('xyz', 'qw')).toBeFalsy();
     });
   });
 

@@ -1,10 +1,10 @@
 # React-perfect-zoom [![npm](https://img.shields.io/npm/v/react-perfect-zoom.svg)](https://www.npmjs.com/package/react-perfect-zoom) [![npm downloads](https://img.shields.io/npm/dm/react-perfect-zoom.svg)](https://www.npmjs.com/package/react-perfect-zoom)
 
-React component which allow you to see exact part of image thumbnail in real dimensions next to it.
+React component which allow you to see exact part of image thumbnail in real dimensions next to it. Works also on mobile devices.
 
 ![Alt Demo](https://raw.githubusercontent.com/jedluk/random/master/react-perfect-zoom/perfect_zoom_demo.gif)
 
-Demo available here: https://jedluk.github.io/react-perfect-zoom-playground/ . Component is built in pure React without additional npm dependencies (either canvas element is not used). Widge range of props let you display original image exactly where you want it. Currently working on mobile device support.
+Demo available here: https://jedluk.github.io/react-perfect-zoom-playground/ . Component is built in pure React without additional npm dependencies (either canvas element is not used). Wide range of props let you display original image exactly where you want it. Touch events are also supported now.
 
 ## Installation
 
@@ -82,6 +82,7 @@ Any kind of help is highly appreciated. Feel free to add any kind of issue and c
 - [ ] allow to use React Portal when showing original image
 - [ ] distinguish between thumbnail source and real image source (+ load 'on demand')
 - [x] allow to use custom classes (rectangle)
-- [ ] support for mobile devices (touch events)
+- [x] support for mobile devices (touch events)
 - [x] remove scrollbars from body when zooming image
 - [ ] allow to download cropped image
+- [ ] add new props called 'align' (align relative to thumbnail)
