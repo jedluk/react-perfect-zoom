@@ -1,5 +1,5 @@
 import React from 'react';
-import { isNumber, isElement } from '../lib/utils';
+import { areValidPositions } from '../lib/placement';
 
 class Canvas extends React.PureComponent {
   constructor(props) {
@@ -49,7 +49,7 @@ class Canvas extends React.PureComponent {
 
   render() {
     const { image, positions } = this.props;
-    if (!Object.values(positions).every(isNumber) || !isElement(image)) {
+    if (!areValidPositions(positions) || !image) {
       return null;
     }
     const { width, height } = this.getScaledImageDimensions(positions);
