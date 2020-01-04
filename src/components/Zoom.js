@@ -1,21 +1,25 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
-import { withTranslation, getPlacementFunction } from '../lib/placement';
+import {
+  withTranslation,
+  getPlacementFunction,
+  areValidPositions
+} from '../lib/placement';
 import { cropImage } from '../lib/crop';
-import { isElement } from '../lib/utils';
+import { getProperty } from '../lib/utils';
 import Canvas from './Canvas';
 
 const Zoom = ({
   imgRef,
   source,
-  placement,
-  positions,
   translate,
   allowDownload,
-  margin = 20
+  placement = 'right',
+  margin = 20,
+  positions = {}
 }) => (
   <Fragment>
-    {imgRef && isElement(imgRef.current) && (
+    {!!getProperty(imgRef, 'current', null) && areValidPositions(positions) && (
       <div
         className="perfect-zoom-container"
         style={withTranslation(translate)(
@@ -30,9 +34,9 @@ const Zoom = ({
 );
 
 Zoom.propTypes = {
-  source: PropTypes.string,
-  imgRef: PropTypes.object,
-  placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
+  source: PropTypes.string.isRequired,
+  placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']).isRequired,
+  imgRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   positions: PropTypes.shape({
     clickX: PropTypes.number,
     clickY: PropTypes.number,

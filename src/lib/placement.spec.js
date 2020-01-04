@@ -2,7 +2,8 @@ import {
   getPlacementFunction,
   getHorizontalDistance,
   getVerticaDistance,
-  withTranslation
+  withTranslation,
+  areValidPositions
 } from './placement';
 
 describe('placement module', () => {
@@ -51,5 +52,28 @@ describe('placement module', () => {
         left: 30
       });
     });
+  });
+  describe('areValidPositions function', () => {
+    const positions = {
+      clickX: 10,
+      clickY: 10,
+      currentX: 50,
+      currentY: 50
+    };
+    it('return true when positions is object with known keys and all values are number', () => {
+      expect(areValidPositions(positions)).toBeTruthy();
+    });
+    it('return false when some values are not a numbers', () => {});
+    const incorrectPositions = {
+      ...positions,
+      clickX: 'not a number'
+    };
+    expect(areValidPositions(incorrectPositions)).toBeFalsy();
+  });
+  it('return false when positions is not an object', () => {
+    expect(areValidPositions(null)).toBeFalsy();
+    expect(areValidPositions(false)).toBeFalsy();
+    expect(areValidPositions('qwerty')).toBeFalsy();
+    expect(areValidPositions(98)).toBeFalsy();
   });
 });
