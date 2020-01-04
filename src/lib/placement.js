@@ -1,4 +1,4 @@
-import { getProperty } from './utils';
+import { getProperty, isNumber, isObject } from './utils';
 
 export const getHorizontalDistance = (scale, { currentX, clickX }) =>
   Math.floor(Math.abs(currentX - clickX) * scale);
@@ -10,6 +10,15 @@ export const withTranslation = (translate) => (obj) => ({
   top: getProperty(obj, 'top', 0) + getProperty(translate, 'y', 0),
   left: getProperty(obj, 'left', 0) + getProperty(translate, 'x', 0)
 });
+
+export const areValidPositions = (positions) => {
+  const validPositions = ['clickX', 'clickY', 'currentX', 'currentY'];
+  return (
+    isObject(positions) &&
+    Object.keys(positions).length > 0 &&
+    Object.entries(positions).every(([k, v]) => validPositions.includes(k) && isNumber(v))
+  );
+};
 
 export const getPlacementFunction = (placement) =>
   ({

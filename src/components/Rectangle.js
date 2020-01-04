@@ -6,10 +6,10 @@ import {
   getBottomCoordinates,
   getLeftCoordinates
 } from '../lib/rectangleCoordinates';
-import { isNumber } from '../lib/utils';
+import { areValidPositions } from '../lib/placement';
 
 const Rectangle = ({ positions, rectangleStyles }) => {
-  if (!isNumber(positions.clickX) || !isNumber(positions.clickY)) {
+  if (!areValidPositions(positions)) {
     return null;
   }
   return (
