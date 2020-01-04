@@ -28,7 +28,8 @@ class Canvas extends React.PureComponent {
   };
 
   downloadImage = (canvas) => {
-    // virtual link will be removed via garbage collector when exiting function (not attached to a DOM)
+    // virtual link will be removed by garbage collector when exiting function
+    // (element is not attached to a DOM)
     const virtualLink = document.createElement('a');
     virtualLink.download = 'cropped_image.png';
     virtualLink.href = canvas.toDataURL('image/png;base64');
@@ -57,7 +58,7 @@ class Canvas extends React.PureComponent {
         ref={this.canvasRef}
         width={width}
         height={height}
-        style={{ display: 'none' }}
+        className="perfect-zoom-canvas"
       />
     );
   }

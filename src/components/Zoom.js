@@ -5,7 +5,15 @@ import { cropImage } from '../lib/crop';
 import { isElement } from '../lib/utils';
 import Canvas from './Canvas';
 
-const Zoom = ({ imgRef, source, placement, positions, translate, margin = 20 }) => (
+const Zoom = ({
+  imgRef,
+  source,
+  placement,
+  positions,
+  translate,
+  allowDownload,
+  margin = 20
+}) => (
   <Fragment>
     {isElement(imgRef.current) && (
       <div
@@ -14,12 +22,8 @@ const Zoom = ({ imgRef, source, placement, positions, translate, margin = 20 }) 
           getPlacementFunction(placement)(imgRef.current, positions, margin)
         )}
       >
-        <Canvas image={imgRef.current} positions={positions} />
-        <img
-          src={source}
-          alt="realImage"
-          style={cropImage(imgRef.current, positions)}
-        />
+        {allowDownload && <Canvas image={imgRef.current} positions={positions} />}
+        <img src={source} alt="realImage" style={cropImage(imgRef.current, positions)} />
       </div>
     )}
   </Fragment>
