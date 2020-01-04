@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import {
-  getBottomCoordinates,
-  getLeftCoordinates,
+  getTopCoordinates,
   getRightCoordinates,
-  getTopCoordinates
-} from '../lib/coordinates';
+  getBottomCoordinates,
+  getLeftCoordinates
+} from '../lib/rectangleCoordinates';
 import { isNumber } from '../lib/utils';
 
-const Rectangle = ({ positions }) => {
+const Rectangle = ({ positions, rectangleStyles }) => {
   if (!isNumber(positions.clickX) || !isNumber(positions.clickY)) {
     return null;
   }
@@ -16,19 +16,19 @@ const Rectangle = ({ positions }) => {
     <Fragment>
       <div
         className="perfect-zoom-top-border"
-        style={getTopCoordinates(positions)}
+        style={getTopCoordinates(positions, rectangleStyles)}
       />
       <div
         className="perfect-zoom-right-border"
-        style={getRightCoordinates(positions)}
+        style={getRightCoordinates(positions, rectangleStyles)}
       />
       <div
         className="perfect-zoom-bottom-border"
-        style={getBottomCoordinates(positions)}
+        style={getBottomCoordinates(positions, rectangleStyles)}
       />
       <div
         className="perfect-zoom-left-border"
-        style={getLeftCoordinates(positions)}
+        style={getLeftCoordinates(positions, rectangleStyles)}
       />
     </Fragment>
   );
@@ -40,6 +40,10 @@ Rectangle.propTypes = {
     clickY: PropTypes.number,
     currentX: PropTypes.number,
     currentY: PropTypes.number
+  }),
+  rectangleStyles: PropTypes.shape({
+    color: PropTypes.string,
+    size: PropTypes.number
   })
 };
 

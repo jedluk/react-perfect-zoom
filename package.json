@@ -1,31 +1,27 @@
 {
   "name": "react-perfect-zoom",
-  "version": "0.1.0",
-  "private": false,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+  "author": {
+    "name": "Jędrzej Łukasiuk",
+    "email": "jedrzej.lukasiuk@gmail.com"
   },
+  "version": "0.4.0",
+  "main": "dist/index.js",
+  "private": false,
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/jedluk/react-perfect-zoom"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://registry.npmjs.org"
   },
   "bugs": {
     "url": "https://github.com/jedluk/react-perfect-zoom/issues"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "NODE_ENV=production && rm -rf dist && mkdir dist && npx babel src --out-dir dist --copy-files",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "npm:publish": "yarn test && yarn build && yarn publish"
+    "build": "NODE_ENV=production && rm -rf dist && mkdir dist && npx babel src --ignore '**/*.spec.js' --out-dir dist --copy-files",
+    "test": "jest",
+    "npm:publish": "npm run test && npm run build && npm publish"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,18 +38,61 @@
       "last 1 safari version"
     ]
   },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "prop-types": "^15.7.2"
+  },
+  "dependencies": {},
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1"
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^24.9.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-test-renderer": "^16.12.0"
   },
   "babel": {
     "presets": [
-      "react",
-      "env",
-      "stage-2"
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
+  },
+  "keywords": [
+    "react",
+    "image",
+    "zoom",
+    "react zoom",
+    "image zoom",
+    "image enlarge",
+    "image enhancement",
+    "photo zoom",
+    "perfect zoom",
+    "react perfect zoom"
+  ],
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json"
+    ],
+    "setupFilesAfterEnv": [
+      "./src/setupTests.js"
     ]
   }
 }
