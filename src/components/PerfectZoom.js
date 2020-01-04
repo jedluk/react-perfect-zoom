@@ -16,6 +16,7 @@ const PerfectZoom = ({
   margin,
   translate,
   placement,
+  allowDownload,
   ...hocProps
 }) => (
   <div className="pos-relative">
@@ -38,6 +39,7 @@ const PerfectZoom = ({
         margin={margin}
         imgRef={hocProps.imageRef}
         positions={hocProps.positions}
+        allowDownload={!isMobile && allowDownload}
       />
     )}
   </div>
@@ -55,13 +57,15 @@ PerfectZoom.propTypes = {
   translate: PropTypes.shape({
     x: PropTypes.number,
     y: PropTypes.number
-  })
+  }),
+  allowDownload: PropTypes.bool
 };
 
 PerfectZoom.defaultProps = {
   placement: 'right',
   thumbnailSize: [300, 500],
-  margin: 20
+  margin: 20,
+  allowDownload: false
 };
 
 const HoC = isMobile && touchDevice ? withTouchEvents : withMouseEvents;

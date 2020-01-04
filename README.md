@@ -4,7 +4,7 @@ React component which allow you to see exact part of image thumbnail in real dim
 
 ![Alt Demo](https://raw.githubusercontent.com/jedluk/random/master/react-perfect-zoom/perfect_zoom_demo.gif)
 
-Demo available here: https://jedluk.github.io/react-perfect-zoom-playground/ . Component is built in pure React without additional npm dependencies (either canvas element is not used). Wide range of props let you display original image exactly where you want it. Touch events are also supported now.
+Demo available here: https://jedluk.github.io/react-perfect-zoom-playground/ . Component is built in pure React without additional npm dependencies. Wide range of props let you display original image exactly where you want it. It works with either mouse or touch events. On desktop it's even possible to download zoomed image (use _allowDownload_ props and simply press 'D' key while zooming).
 
 ## Installation
 
@@ -26,6 +26,7 @@ import PerfectZoom from 'react-perfect-zoom';
 const SomeComponent = (props) => (
   <div style={{ display: 'flex', margin: 20 }}>
     <PerfectZoom
+        allowDownload
         placement="right"
         source={sample}
         thumbnailSize={[300, 500]}
@@ -69,6 +70,9 @@ translate: ?{ x: number, y: number }
 // styles applied to rectangle
 rectangleStyles: ?{ color: string, size: number }
 
+// allow download cropped image
+allowDownload: bool = false
+
 
 ```
 
@@ -84,5 +88,5 @@ Any kind of help is highly appreciated. Feel free to add any kind of issue and c
 - [x] allow to use custom classes (rectangle)
 - [x] support for mobile devices (touch events)
 - [x] remove scrollbars from body when zooming image
-- [ ] allow to download cropped image
+- [x] allow to download cropped image
 - [ ] add new props called 'align' (align relative to thumbnail)
