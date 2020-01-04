@@ -21,6 +21,7 @@
   "scripts": {
     "build": "NODE_ENV=production && rm -rf dist && mkdir dist && npx babel src --ignore '**/*.spec.js' --out-dir dist --copy-files",
     "test": "jest",
+    "test-watch": "jest --watch --verbose false",
     "npm:publish": "npm run test && npm run build && npm publish"
   },
   "eslintConfig": {
@@ -39,9 +40,9 @@
     ]
   },
   "peerDependencies": {
+    "prop-types": "^15.7.2",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "prop-types": "^15.7.2"
+    "react-dom": "^16.12.0"
   },
   "dependencies": {},
   "devDependencies": {
@@ -93,6 +94,9 @@
     ],
     "setupFilesAfterEnv": [
       "./src/setupTests.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
   }
 }
