@@ -7,7 +7,7 @@ export const isString = (x) => typeof x === 'string';
 
 export const isObject = (x) => typeof x === 'object' && x !== null;
 
-export const inCloseRange = (x, y) => Math.abs(x - y) <= 4;
+export const inRange = (range) => (x, y) => Math.abs(x - y) <= range;
 
 export const getProperty = (obj, path, fallback) => {
   if (!isObject(obj) || !isString(path)) {
