@@ -2,12 +2,12 @@ import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import { isNumber } from '../lib/utils';
 
-const ClickInfo = ({ positions: { currentX, currentY, clickX, clickY } }) => (
+const ClickInfo = ({ positions: { currentX, currentY, clickX, clickY } = {} }) => (
   <Fragment>
     <br />
     {isNumber(currentX) && (
       <h4 className="d-inline">
-        Current position ({currentX}, {currentY})
+        Current position: ({currentX},{currentY})
       </h4>
     )}{' '}
     {isNumber(clickX) && (
