@@ -1,7 +1,6 @@
 import React from 'react';
 import { INITIAL_POSITION } from '../../lib/rectangleCoordinates';
 import { getRelativeCoordinates, getPositions, isOutsideImageRectangle } from './mixins';
-import { stopBodyScrolling } from './mixins';
 import { isNumber } from '../../lib/utils';
 
 const EXIT_MARGIN = 10;
