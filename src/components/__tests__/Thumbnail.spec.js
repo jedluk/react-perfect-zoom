@@ -1,6 +1,6 @@
 import React from 'react';
-import Thumbnail from './Thumbnail';
-import Rectangle from './Rectangle';
+import Thumbnail from '../Thumbnail';
+import Rectangle from '../Rectangle';
 import { shallow } from 'enzyme';
 
 describe('Thumbnail component', () => {

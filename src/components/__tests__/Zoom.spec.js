@@ -1,6 +1,6 @@
 import React from 'react';
-import Zoom from './Zoom';
-import Canvas from './Canvas';
+import Zoom from '../Zoom';
+import Canvas from '../Canvas';
 import { shallow } from 'enzyme';
 
 describe('Zoom component', () => {

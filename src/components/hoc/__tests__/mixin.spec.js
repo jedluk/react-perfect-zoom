@@ -1,4 +1,4 @@
-import { getRelativeCoordinates, getPositions, isOutsideImageRectangle } from './mixins';
+import { getRelativeCoordinates, getPositions, isOutsideImageRectangle } from '../mixins';
 
 describe('mixins module', () => {
   describe('getPositions function', () => {

@@ -1,4 +1,4 @@
-import { cropImage } from './crop';
+import { cropImage } from '../crop';
 
 describe('cropImage function', () => {
   const currentPositions = {

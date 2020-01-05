@@ -1,4 +1,4 @@
-import { inRange, isNumber, isObject, isString, getProperty } from './utils';
+import { inRange, isNumber, isObject, isString, getProperty } from '../utils';
 
 describe('utils module', () => {
   describe('inCloseRange function', () => {

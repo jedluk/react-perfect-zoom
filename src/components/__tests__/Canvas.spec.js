@@ -1,5 +1,5 @@
 import React from 'react';
-import Canvas from './Canvas';
+import Canvas from '../Canvas';
 import { shallow } from 'enzyme';
 
 // download action should be testes as e2e there is no clean way to do it with enzyme

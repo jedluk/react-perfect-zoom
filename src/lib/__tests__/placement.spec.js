@@ -4,7 +4,7 @@ import {
   getVerticaDistance,
   withTranslation,
   areValidPositions
-} from './placement';
+} from '../placement';
 
 describe('placement module', () => {
   describe('getPlacementFunction function', () => {

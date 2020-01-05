@@ -1,5 +1,5 @@
 import React from 'react';
-import Rectangle from './Rectangle';
+import Rectangle from '../Rectangle';
 import { shallow } from 'enzyme';
 
 describe('Rectangle component', () => {
