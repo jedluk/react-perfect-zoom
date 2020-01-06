@@ -11,6 +11,7 @@ import '../assets/index.css';
 
 const PerfectZoom = ({
   source,
+  align,
   thumbnailSize,
   rectangleStyles,
   margin,
@@ -31,10 +32,11 @@ const PerfectZoom = ({
     {getProperty(process, 'env.REACT_APP_PERFECT_ZOOM_DEBUG', false) && (
       <ClickInfo positions={hocProps.positions} />
     )}
-    {isNumber(getProperty(hocProps, 'positions.currentX', null)) && (
+    {isNumber(hocProps.positions.currentX) && (
       <Zoom
         source={source}
         placement={placement}
+        align={align}
         translate={translate}
         margin={margin}
         imgRef={hocProps.imageRef}
@@ -49,6 +51,7 @@ PerfectZoom.propTypes = {
   source: PropTypes.string.isRequired,
   thumbnailSize: PropTypes.arrayOf(PropTypes.number),
   placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
+  align: PropTypes.oneOf(['start', 'center', 'end']),
   margin: PropTypes.number,
   rectangleStyles: PropTypes.shape({
     color: PropTypes.string,
@@ -63,6 +66,7 @@ PerfectZoom.propTypes = {
 
 PerfectZoom.defaultProps = {
   placement: 'right',
+  align: 'center',
   thumbnailSize: [300, 500],
   margin: 20,
   allowDownload: false
