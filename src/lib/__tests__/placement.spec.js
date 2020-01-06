@@ -1,20 +1,36 @@
 import {
-  getPlacementFunction,
-  getHorizontalDistance,
-  getVerticaDistance,
+  getCroppedImageSize,
+  withAlignment,
   withTranslation,
-  areValidPositions
+  areValidPositions,
+  placementFunc
 } from '../placement';
 
 describe('placement module', () => {
+  describe('getCroppedImageSize function', () => {
+    it('return real dimensions of cropped image', () => {
+      const scale = 2;
+      const positions = {
+        clickX: 10,
+        clickY: 10,
+        currentX: 20,
+        currentY: 20
+      };
+      expect(getCroppedImageSize(scale, positions)).toEqual({
+        width: 20,
+        height: 20
+      });
+    });
+  });
+
   describe('getPlacementFunction function', () => {
     it('return function when passing one of left, right, top, bottom', () => {
       ['left', 'right', 'top', 'bottom'].forEach((arg) =>
-        expect(getPlacementFunction(arg)).toBeInstanceOf(Function)
+        expect(placementFunc(arg)).toBeInstanceOf(Function)
       );
     });
     it('return undefined when passing no one of left, right, top, bottom', () => {
-      expect(getPlacementFunction('xyz')).toBeUndefined();
+      expect(placementFunc('xyz')).toBeUndefined();
     });
     it('return top and left coordinates when calling it twice', () => {
       const image = {
@@ -29,22 +45,13 @@ describe('placement module', () => {
         currentY: 50
       };
       ['left', 'right', 'top', 'bottom'].forEach((arg) => {
-        expect(getPlacementFunction(arg)(image, positions)).toBeInstanceOf(Object);
-        expect(getPlacementFunction(arg)(image, positions)).toHaveProperty('top');
-        expect(getPlacementFunction(arg)(image, positions)).toHaveProperty('left');
+        expect(placementFunc(arg)(image, positions)).toBeInstanceOf(Object);
+        expect(placementFunc(arg)(image, positions)).toHaveProperty('top');
+        expect(placementFunc(arg)(image, positions)).toHaveProperty('left');
       });
     });
   });
-  describe('getHorizontalDistance function', () => {
-    it('return scaled distance between clickX and currentX multiplied', () => {
-      expect(getHorizontalDistance(2, { currentX: 10, clickX: 20 })).toEqual(20);
-    });
-  });
-  describe('getVerticalDistance function', () => {
-    it('return scaled dsitance between clickY and currentY', () => {
-      expect(getVerticaDistance(2, { clickY: 10, currentY: 20 })).toEqual(20);
-    });
-  });
+
   describe('with translation function', () => {
     it('add translation to top and left properties of object', () => {
       expect(withTranslation({ x: 10, y: 10 })({ top: 2, left: 20 })).toEqual({
@@ -53,6 +60,32 @@ describe('placement module', () => {
       });
     });
   });
+
+  describe('withAlignment function', () => {
+    it('align real image relative to thumbnail', () => {
+      const align = 'center';
+      const placement = 'right';
+      const positions = {
+        clickX: 10,
+        clickY: 10,
+        currentX: 20,
+        currentY: 20
+      };
+      const img = {
+        clientHeight: 100,
+        naturalHeight: 200
+      };
+      const obj = {
+        top: 10,
+        left: 10
+      };
+      expect(withAlignment(align, { placement, positions, img })(obj)).toEqual({
+        top: 50,
+        left: 10
+      });
+    });
+  });
+
   describe('areValidPositions function', () => {
     const positions = {
       clickX: 10,
