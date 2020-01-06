@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
+import Loader from './Loader';
 import {
   getTopCoordinates,
   getRightCoordinates,
@@ -8,12 +9,19 @@ import {
 } from '../lib/rectangleCoordinates';
 import { areValidPositions } from '../lib/placement';
 
+const getLoaderCoordinates = ({ clickX, clickY, currentX, currentY }, style) => ({
+  top: Math.floor((clickY + currentY) / 2 - 47 / 2),
+  left: Math.floor((clickX + currentX) / 2 - 57 / 2),
+  color: style.color
+});
+
 const Rectangle = ({ positions, rectangleStyles }) => {
   if (!areValidPositions(positions)) {
     return null;
   }
   return (
     <Fragment>
+      <Loader position={getLoaderCoordinates(positions, rectangleStyles)} />
       <div
         className="perfect-zoom-top-border"
         style={getTopCoordinates(positions, rectangleStyles)}
