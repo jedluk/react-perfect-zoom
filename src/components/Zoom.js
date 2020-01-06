@@ -1,33 +1,25 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
-import {
-  withTranslation,
-  getPlacementFunction,
-  areValidPositions
-} from '../lib/placement';
+import { areValidPositions, getContainerPosition } from '../lib/placement';
 import { cropImage } from '../lib/crop';
-import { getProperty } from '../lib/utils';
 import Canvas from './Canvas';
+import { isObject } from '../lib/utils';
 
-const Zoom = ({
-  imgRef,
-  source,
-  translate,
-  allowDownload,
-  placement = 'right',
-  margin = 20,
-  positions = {}
-}) => (
+const Zoom = ({ source, allowDownload, imgRef, ...placementProps }) => (
   <Fragment>
-    {!!getProperty(imgRef, 'current', null) && areValidPositions(positions) && (
+    {isObject(imgRef) && imgRef.current && areValidPositions(placementProps.positions) && (
       <div
         className="perfect-zoom-container"
-        style={withTranslation(translate)(
-          getPlacementFunction(placement)(imgRef.current, positions, margin)
-        )}
+        style={getContainerPosition({ ...placementProps, img: imgRef.current })}
       >
-        {allowDownload && <Canvas image={imgRef.current} positions={positions} />}
-        <img src={source} alt="realImage" style={cropImage(imgRef.current, positions)} />
+        {allowDownload && (
+          <Canvas image={imgRef.current} positions={placementProps.positions} />
+        )}
+        <img
+          src={source}
+          alt="realImage"
+          style={cropImage(imgRef.current, placementProps.positions)}
+        />
       </div>
     )}
   </Fragment>
@@ -36,7 +28,10 @@ const Zoom = ({
 Zoom.propTypes = {
   source: PropTypes.string.isRequired,
   placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']).isRequired,
-  imgRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  align: PropTypes.oneOf(['start', 'center', 'end']).isRequired,
+  imgRef: PropTypes.shape({
+    current: PropTypes.instanceOf(Element)
+  }),
   positions: PropTypes.shape({
     clickX: PropTypes.number,
     clickY: PropTypes.number,

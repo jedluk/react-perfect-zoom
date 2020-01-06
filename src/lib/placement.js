@@ -91,8 +91,8 @@ export const withAlignment = (align, { img, placement, positions }) => {
 
 export const getContainerPosition = ({
   img,
-  align,
   translate,
+  align = 'center',
   positions = {},
   margin = 20,
   placement = 'right'
