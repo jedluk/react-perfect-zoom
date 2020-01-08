@@ -72,7 +72,7 @@ Canvas.propTypes = {
     clickY: PropTypes.number,
     currentX: PropTypes.number,
     currentY: PropTypes.number
-  }).isRequired
+  })
 };
 
 export default Canvas;
