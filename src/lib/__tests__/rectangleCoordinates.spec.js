@@ -3,7 +3,7 @@ import {
   getLeftCoordinates,
   getTopCoordinates,
   getRightCoordinates
-} from './rectangleCoordinates';
+} from '../rectangleCoordinates';
 
 describe('coordinates module', () => {
   const currentPositions = {

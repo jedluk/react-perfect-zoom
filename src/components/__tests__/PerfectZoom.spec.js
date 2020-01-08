@@ -1,5 +1,5 @@
 import React from 'react';
-import PerfectZoom from './PerfectZoom';
+import PerfectZoom from '../PerfectZoom';
 import { mount } from 'enzyme';
 
 // TODO: e2e tests for entire component

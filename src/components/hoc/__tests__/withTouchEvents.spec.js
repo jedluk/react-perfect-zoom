@@ -1,5 +1,5 @@
 import React from 'react';
-import withTouchEvents from './withTouchEvents';
+import withTouchEvents from '../withTouchEvents';
 import { shallow } from 'enzyme';
 
 const Simple = (props) => <div>test</div>;

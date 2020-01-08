@@ -1,12 +1,17 @@
 import React from 'react';
-import Zoom from './Zoom';
-import Canvas from './Canvas';
+import Zoom from '../Zoom';
+import Canvas from '../Canvas';
 import { shallow } from 'enzyme';
 
 describe('Zoom component', () => {
   const positions = { currentX: 25, currentY: 20, clickX: 10, clickY: 10 };
   const imgRef = {
-    current: { naturalHeight: 900, naturalWidth: 1600, clientHeight: 500 }
+    current: {
+      naturalHeight: 900,
+      naturalWidth: 1600,
+      clientHeight: 500,
+      clientWidth: 300
+    }
   };
 
   it('render nothing when image reference is not provided', () => {
@@ -25,7 +30,7 @@ describe('Zoom component', () => {
     expect(wrapper.children().length).toEqual(0);
   });
 
-  it('render image and image container whenreference is passsed', () => {
+  it('render image and image container when reference is passsed', () => {
     const wrapper = shallow(<Zoom imgRef={imgRef} positions={positions} />);
     expect(wrapper.find("[alt='realImage']")).toBeDefined();
     expect(wrapper.find('.perfect-zoom-container')).toBeDefined();

@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import { areValidPositions } from '../lib/placement';
 
 class Canvas extends React.PureComponent {
@@ -63,5 +64,15 @@ class Canvas extends React.PureComponent {
     );
   }
 }
+
+Canvas.propTypes = {
+  image: PropTypes.oneOfType([PropTypes.object, PropTypes.instanceOf(Element)]),
+  positions: PropTypes.shape({
+    clickX: PropTypes.number,
+    clickY: PropTypes.number,
+    currentX: PropTypes.number,
+    currentY: PropTypes.number
+  })
+};
 
 export default Canvas;

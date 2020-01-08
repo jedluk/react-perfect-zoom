@@ -1,5 +1,5 @@
 import React from 'react';
-import ClickInfo from './ClickInfo';
+import ClickInfo from '../ClickInfo';
 import { shallow } from 'enzyme';
 
 describe('ClickInfo component', () => {

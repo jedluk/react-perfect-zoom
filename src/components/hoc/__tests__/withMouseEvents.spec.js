@@ -1,5 +1,5 @@
 import React from 'react';
-import withMouseEvents from './withMouseEvents';
+import withMouseEvents from '../withMouseEvents';
 import { shallow } from 'enzyme';
 
 const Simple = (props) => <div>test</div>;
