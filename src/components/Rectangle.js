@@ -5,26 +5,19 @@ import {
   getTopCoordinates,
   getRightCoordinates,
   getBottomCoordinates,
-  getLeftCoordinates
+  getLeftCoordinates,
+  getLoaderCoordinates
 } from '../lib/rectangleCoordinates';
-import { withUserProps } from './context/UserPropsContext';
 import { areValidPositions } from '../lib/placement';
+import { realImageStates } from '../lib/imageState';
 
-const getLoaderCoordinates = ({ clickX, currentX, clickY, currentY }) => ({
-  top: currentY || clickY,
-  left: currentX || clickX
-});
-
-const Rectangle = ({ source, realImageLoaded, positions, rectangleStyles }) => {
+const Rectangle = ({ singleSource, realImageState, positions, rectangleStyles }) => {
   if (!areValidPositions(positions)) {
     return null;
   }
-  if ('realImage' in source && !realImageLoaded) {
+  if (!singleSource && realImageState === realImageStates.IN_PROGRESS) {
     return (
-      <Loader
-        color={rectangleStyles.color}
-        position={getLoaderCoordinates(positions, rectangleStyles)}
-      />
+      <Loader color={rectangleStyles.color} position={getLoaderCoordinates(positions)} />
     );
   }
   return (
@@ -59,8 +52,9 @@ Rectangle.propTypes = {
   rectangleStyles: PropTypes.shape({
     color: PropTypes.string,
     size: PropTypes.number
-  })
+  }),
+  singleSource: PropTypes.bool,
+  realImageState: PropTypes.oneOf(Object.values(realImageStates))
 };
 
-const userProps = ['realImageLoaded', 'source', 'rectangleStyles'];
-export default React.memo(withUserProps(userProps)(Rectangle));
+export default React.memo(Rectangle);

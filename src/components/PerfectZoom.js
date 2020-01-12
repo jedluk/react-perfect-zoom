@@ -20,8 +20,8 @@ const PerfectZoom = ({ imageRef, positions, events }) => (
   </div>
 );
 
-Zoom.propTypes = {
-  imgRef: PropTypes.shape({
+PerfectZoom.propTypes = {
+  imageRef: PropTypes.shape({
     current: PropTypes.instanceOf(Element)
   }),
   positions: PropTypes.shape({
@@ -29,14 +29,18 @@ Zoom.propTypes = {
     clickY: PropTypes.number,
     posX: PropTypes.number,
     posY: PropTypes.number
-  }),
-  events: PropTypes.shape({
-    onClick: PropTypes.func,
-    onMouseMove: PropTypes.func,
-    onTouchStart: PropTypes.func,
-    onTouchMove: PropTypes.func,
-    onTouchEnd: PropTypes.func
-  })
+  }).isRequired,
+  events: PropTypes.oneOfType([
+    PropTypes.shape({
+      onClick: PropTypes.func,
+      onMouseMove: PropTypes.func
+    }),
+    PropTypes.shape({
+      onTouchStart: PropTypes.func,
+      onTouchMove: PropTypes.func,
+      onTouchEnd: PropTypes.func
+    })
+  ]).isRequired
 };
 
 const HoC = isMobile && touchDevice ? withTouchEvents : withMouseEvents;

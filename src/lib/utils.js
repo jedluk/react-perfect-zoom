@@ -18,8 +18,6 @@ export const getProperty = (obj, path, fallback) => {
   return value || fallback;
 };
 
-export const emptyArray = (arr) => Array.isArray(arr) && arr.length === 0;
-
 export const pick = (rootObj, props) =>
   Object.keys(rootObj)
     .filter((key) => props.includes(key))

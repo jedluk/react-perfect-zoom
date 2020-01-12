@@ -32,10 +32,6 @@
   z-index: 15;
 }
 
-.perfect-zoom-image-picker>img:first-child {
-  cursor: crosshair;
-}
-
 .perfect-zoom-container {
   position: absolute;
   overflow: hidden;

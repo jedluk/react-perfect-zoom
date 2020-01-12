@@ -1,43 +1,58 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import PerfectZoom from './PerfectZoom';
-import { UserProps } from './context/UserPropsContext';
+import { PefectZoomProps } from './context/PerfectZoomContext';
+import { realImageStates } from '../lib/imageState';
+import { pick } from '../lib/utils';
 import '../assets/index.css';
 
-class PerfectZoomWrapper extends React.Component {
+class PerfectZoomWrapper extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      realImageLoaded: false
+      realImageState: realImageStates.NOT_LOADED
     };
   }
 
-  setRealImageLoaded = () => this.setState({ realImageLoaded: true });
+  setRealImageState = (state) => {
+    if (Object.values(realImageStates).includes(state)) {
+      this.setState({ realImageState: state });
+    }
+  };
 
   render() {
     return (
-      <UserProps.Provider
+      <PefectZoomProps.Provider
         value={{
-          ...this.props,
-          realImageLoaded: this.state.realImageLoaded,
-          setRealImageLoaded: this.setRealImageLoaded
+          ...pick(this.props, Object.keys(PerfectZoomWrapper.propTypes)),
+          realImageState: this.state.realImageState,
+          setRealImageState: this.setRealImageState
         }}
       >
         <PerfectZoom />
-      </UserProps.Provider>
+      </PefectZoomProps.Provider>
     );
   }
 }
 
 PerfectZoomWrapper.propTypes = {
-  // source: PropTypes.oneOf([PropTypes.shape({
-  //   url: PropTypes.string,
-  //   size: PropTypes.arrayOf(PropTypes.number)
-  // }),
-  // PropTypes.shape({
-
-  // })],
-  thumbnailSize: PropTypes.arrayOf(PropTypes.number),
+  source: PropTypes.oneOfType([
+    PropTypes.shape({
+      url: PropTypes.string,
+      size: PropTypes.arrayOf(PropTypes.number),
+      realSize: PropTypes.arrayOf(PropTypes.number)
+    }),
+    PropTypes.shape({
+      thumbnail: PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        size: PropTypes.arrayOf(PropTypes.number)
+      }),
+      realImage: PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        size: PropTypes.arrayOf(PropTypes.number)
+      })
+    })
+  ]).isRequired,
   placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
   align: PropTypes.oneOf(['start', 'center', 'end']),
   margin: PropTypes.number,
@@ -56,7 +71,11 @@ PerfectZoomWrapper.defaultProps = {
   placement: 'right',
   align: 'center',
   margin: 20,
-  allowDownload: false
+  allowDownload: false,
+  rectangleStyles: {
+    size: 2,
+    color: '#66ff99'
+  }
 };
 
 export default PerfectZoomWrapper;

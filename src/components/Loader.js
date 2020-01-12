@@ -1,12 +1,20 @@
 import React from 'react';
-import '../assets/loader.css';
+import * as PropTypes from 'prop-types';
 
-export default function Loader(props) {
+export default function Loader({ position, color: backgroundColor }) {
   return (
-    <div className="bouncing-loader" style={props.position}>
-      <div style={{ backgroundColor: props.color }} />
-      <div style={{ backgroundColor: props.color }} />
-      <div style={{ backgroundColor: props.color }} />
+    <div className="bouncing-loader" style={position}>
+      <div style={{ backgroundColor }} />
+      <div style={{ backgroundColor }} />
+      <div style={{ backgroundColor }} />
     </div>
   );
 }
+
+Loader.propTypes = {
+  position: PropTypes.shape({
+    top: PropTypes.number,
+    left: PropTypes.number
+  }),
+  color: PropTypes.string
+};

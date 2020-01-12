@@ -1,37 +1,78 @@
 import React from 'react';
-import { withUserProps } from './context/UserPropsContext';
+import Image from './ThumbnailImage';
 import * as PropTypes from 'prop-types';
 import Rectangle from './Rectangle';
+import { withPerfectZoomProps } from './context/PerfectZoomContext';
 import { isNumber } from '../lib/utils';
-import Image from './ThumbnailImage';
+import { isSingleSource } from '../lib/source';
+import { realImageStates } from '../lib/imageState';
 
-const Thumbnail = ({ events, imageRef, source, positions }) => {
-  const thumbnail = source.thumbnail || source;
+const Thumbnail = ({
+  events,
+  imageRef,
+  realImageState,
+  source,
+  positions,
+  rectangleStyles
+}) => {
+  const singleSource = isSingleSource(source);
   return (
     <div className="perfect-zoom-image-picker">
-      <Image ref={imageRef} thumbnail={thumbnail} events={events} />
-      {Object.values(positions).every(isNumber) && <Rectangle positions={positions} />}
+      <Image
+        ref={imageRef}
+        events={events}
+        thumbnail={singleSource ? source : source.thumbnail}
+        cursorNone={!singleSource && realImageState === realImageStates.IN_PROGRESS}
+        {...(singleSource && {
+          handleLoad: () => setRealImageState(realImageStates.LOADED)
+        })}
+      />
+      {Object.values(positions).every(isNumber) && (
+        <Rectangle
+          positions={positions}
+          singleSource={singleSource}
+          realImageState={realImageState}
+          rectangleStyles={rectangleStyles}
+        />
+      )}
     </div>
   );
 };
 
-// TODO: update propTypes
 Thumbnail.propTypes = {
-  handleClick: PropTypes.func,
-  handleMouseMove: PropTypes.func,
-  source: PropTypes.string,
-  size: PropTypes.arrayOf(PropTypes.number),
+  source: PropTypes.oneOfType([
+    PropTypes.shape({
+      url: PropTypes.string,
+      size: PropTypes.arrayOf(PropTypes.number),
+      realSize: PropTypes.arrayOf(PropTypes.number)
+    }),
+    PropTypes.shape({
+      thumbnail: PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        size: PropTypes.arrayOf(PropTypes.number)
+      }),
+      realImage: PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        size: PropTypes.arrayOf(PropTypes.number)
+      })
+    })
+  ]).isRequired,
   positions: PropTypes.shape({
     clickX: PropTypes.number,
     clickY: PropTypes.number,
     posX: PropTypes.number,
     posY: PropTypes.number
   }),
-  rectangleStyles: PropTypes.shape({
-    color: PropTypes.string,
-    size: PropTypes.number
-  })
+  imageRef: PropTypes.shape({
+    current: PropTypes.instanceOf(Element)
+  }),
+  realImageState: PropTypes.oneOf(Object.values(realImageStates))
 };
 
-const userProps = ['source', 'rectangleStyles'];
-export default withUserProps(userProps)(Thumbnail);
+const requiredProps = [
+  'source',
+  'realImageState',
+  'setRealImageState',
+  'rectangleStyles'
+];
+export default withPerfectZoomProps(requiredProps)(Thumbnail);

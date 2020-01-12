@@ -1,38 +1,46 @@
 import React from 'react';
+import Canvas from './Canvas';
 import * as PropTypes from 'prop-types';
-import { withUserProps } from './context/UserPropsContext';
+import { withPerfectZoomProps } from './context/PerfectZoomContext';
 import { areValidPositions, getContainerPosition } from '../lib/placement';
 import { cropImage } from '../lib/crop';
-import Canvas from './Canvas';
 import { isMobile } from '../lib/platformDetector';
 import { isObject } from '../lib/utils';
+import { realImageStates } from '../lib/imageState';
+import { isSingleSource } from '../lib/source';
 
 class Zoom extends React.Component {
   constructor(props) {
     super(props);
-    this.singleSource = !('realImage' in props.source);
-    this.realImgRef = this.singleSource ? props.thumbnailRef : React.createRef(null);
+    this.realImageRef = isSingleSource(props.source)
+      ? props.thumbnailRef
+      : React.createRef(null);
   }
 
   getScale = () => {
-    if (!isObject(this.realImgRef.current)) return;
-    const scale =
-      this.realImgRef.current.naturalHeight /
-      this.props.thumbnailRef.current.clientHeight;
-    return scale;
+    if (!isObject(this.realImageRef.current)) return;
+    return (
+      this.realImageRef.current.naturalHeight /
+      this.props.thumbnailRef.current.clientHeight
+    );
+  };
+
+  setImageLoaded = () => {
+    this.props.setRealImageState(realImageStates.LOADED);
   };
 
   render() {
-    const { source, positions, realImageLoaded } = this.props;
+    const { source, positions, realImageState } = this.props;
     if (!areValidPositions(positions)) {
       return null;
     }
     const scale = this.getScale();
+    const singleSource = isSingleSource(source);
     return (
       <div
         className="perfect-zoom-container"
         style={
-          realImageLoaded || this.singleSource
+          realImageState === realImageStates.LOADED
             ? getContainerPosition({
                 scale,
                 align: this.props.align,
@@ -45,18 +53,18 @@ class Zoom extends React.Component {
         }
       >
         {!isMobile && this.props.allowDownload && (
-          <Canvas image={this.realImgRef.current} positions={positions} scale={scale} />
+          <Canvas image={this.realImageRef.current} positions={positions} scale={scale} />
         )}
         <img
-          src={this.singleSource ? source.url : source.realImage.url}
+          src={singleSource ? source.url : source.realImage.url}
           alt="realImage"
           style={
-            realImageLoaded || this.singleSource
-              ? cropImage(this.realImgRef.current, scale, positions)
+            realImageState === realImageStates.LOADED
+              ? cropImage(this.realImageRef.current, scale, positions)
               : { display: 'none' }
           }
-          ref={this.singleSource ? undefined : this.realImgRef}
-          onLoad={this.singleSource ? undefined : this.props.setRealImageLoaded}
+          ref={singleSource ? undefined : this.realImageRef}
+          onLoad={singleSource ? undefined : this.setImageLoaded}
         />
       </div>
     );
@@ -64,7 +72,23 @@ class Zoom extends React.Component {
 }
 
 Zoom.propTypes = {
-  source: PropTypes.string.isRequired,
+  source: PropTypes.oneOfType([
+    PropTypes.shape({
+      url: PropTypes.string,
+      size: PropTypes.arrayOf(PropTypes.number),
+      realSize: PropTypes.arrayOf(PropTypes.number)
+    }),
+    PropTypes.shape({
+      thumbnail: PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        size: PropTypes.arrayOf(PropTypes.number)
+      }),
+      realImage: PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        size: PropTypes.arrayOf(PropTypes.number)
+      })
+    })
+  ]).isRequired,
   allowDownload: PropTypes.bool,
   placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']).isRequired,
   align: PropTypes.oneOf(['start', 'center', 'end']).isRequired,
@@ -81,17 +105,19 @@ Zoom.propTypes = {
     x: PropTypes.number,
     y: PropTypes.number
   }),
-  margin: PropTypes.number
+  margin: PropTypes.number,
+  realImageState: PropTypes.oneOf(Object.values(realImageStates)),
+  setRealImageState: PropTypes.func
 };
 
-const userProps = [
+const HoC = withPerfectZoomProps([
   'allowDownload',
   'align',
   'placement',
   'translate',
   'margin',
   'source',
-  'realImageLoaded',
-  'setRealImageLoaded'
-];
-export default React.memo(withUserProps(userProps)(Zoom));
+  'realImageState',
+  'setRealImageState'
+])(Zoom);
+export default React.memo(HoC);
