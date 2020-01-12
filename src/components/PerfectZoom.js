@@ -7,69 +7,36 @@ import Zoom from './Zoom';
 import { isMobile, touchDevice } from '../lib/platformDetector';
 import withMouseEvents from './hoc/withMouseEvents';
 import withTouchEvents from './hoc/withTouchEvents';
-import '../assets/index.css';
 
-const PerfectZoom = ({
-  source,
-  align,
-  thumbnailSize,
-  rectangleStyles,
-  margin,
-  translate,
-  placement,
-  allowDownload,
-  ...hocProps
-}) => (
+const PerfectZoom = ({ imageRef, positions, events }) => (
   <div className="pos-relative">
-    <Thumbnail
-      ref={hocProps.imageRef}
-      source={source}
-      size={thumbnailSize}
-      rectangleStyles={rectangleStyles}
-      positions={hocProps.positions}
-      events={hocProps.events}
-    />
+    <Thumbnail imageRef={imageRef} positions={positions} events={events} />
     {getProperty(process, 'env.REACT_APP_PERFECT_ZOOM_DEBUG', false) && (
-      <ClickInfo positions={hocProps.positions} />
+      <ClickInfo positions={positions} />
     )}
-    {isNumber(hocProps.positions.currentX) && (
-      <Zoom
-        source={source}
-        placement={placement}
-        align={align}
-        translate={translate}
-        margin={margin}
-        imgRef={hocProps.imageRef}
-        positions={hocProps.positions}
-        allowDownload={!isMobile && allowDownload}
-      />
+    {isNumber(positions.currentX) && (
+      <Zoom thumbnailRef={imageRef} positions={positions} />
     )}
   </div>
 );
 
-PerfectZoom.propTypes = {
-  source: PropTypes.string.isRequired,
-  thumbnailSize: PropTypes.arrayOf(PropTypes.number),
-  placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
-  align: PropTypes.oneOf(['start', 'center', 'end']),
-  margin: PropTypes.number,
-  rectangleStyles: PropTypes.shape({
-    color: PropTypes.string,
-    size: PropTypes.number
+Zoom.propTypes = {
+  imgRef: PropTypes.shape({
+    current: PropTypes.instanceOf(Element)
   }),
-  translate: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number
+  positions: PropTypes.shape({
+    clickX: PropTypes.number,
+    clickY: PropTypes.number,
+    posX: PropTypes.number,
+    posY: PropTypes.number
   }),
-  allowDownload: PropTypes.bool
-};
-
-PerfectZoom.defaultProps = {
-  placement: 'right',
-  align: 'center',
-  thumbnailSize: [300, 500],
-  margin: 20,
-  allowDownload: false
+  events: PropTypes.shape({
+    onClick: PropTypes.func,
+    onMouseMove: PropTypes.func,
+    onTouchStart: PropTypes.func,
+    onTouchMove: PropTypes.func,
+    onTouchEnd: PropTypes.func
+  })
 };
 
 const HoC = isMobile && touchDevice ? withTouchEvents : withMouseEvents;

@@ -16,32 +16,25 @@ export const getCroppedImageSize = (scale, { clickX, clickY, currentX, currentY 
 
 export const placementFunc = (placement) =>
   ({
-    right(image, positions, margin = 20) {
+    right({ image, margin = 20 }) {
       return {
         top: 0,
         left: image.clientWidth + margin
       };
     },
-    left(image, positions, margin = 20) {
+    left({ scale, positions, margin = 20 }) {
       return {
         top: 0,
-        left: Math.floor(
-          -margin -
-            getCroppedImageSize(image.naturalHeight / image.clientHeight, positions).width
-        )
+        left: Math.floor(-margin - getCroppedImageSize(scale, positions).width)
       };
     },
-    top(image, positions, margin = 20) {
+    top({ scale, positions, margin = 20 }) {
       return {
-        top: Math.floor(
-          -margin -
-            getCroppedImageSize(image.naturalHeight / image.clientHeight, positions)
-              .height
-        ),
+        top: Math.floor(-margin - getCroppedImageSize(scale, positions).height),
         left: 0
       };
     },
-    bottom(image, positions, margin = 20) {
+    bottom({ image, margin = 20 }) {
       return {
         top: image.clientHeight + margin,
         left: 0
@@ -54,9 +47,8 @@ export const withTranslation = (translate) => (obj) => ({
   left: obj.left + getProperty(translate, 'x', 0)
 });
 
-export const withAlignment = (align, { img, placement, positions }) => {
+export const withAlignment = (align, { image, scale, placement, positions }) => {
   const alignVertical = ['left', 'right'].includes(placement);
-  const scale = img.naturalHeight / img.clientHeight;
   const displacement = {
     start: {
       top: 0,
@@ -65,21 +57,21 @@ export const withAlignment = (align, { img, placement, positions }) => {
     center: {
       top: alignVertical
         ? Math.floor(
-            img.clientHeight / 2 - getCroppedImageSize(scale, positions).height / 2
+            image.clientHeight / 2 - getCroppedImageSize(scale, positions).height / 2
           )
         : 0,
       left: !alignVertical
         ? Math.floor(
-            img.clientWidth / 2 - getCroppedImageSize(scale, positions).width / 2
+            image.clientWidth / 2 - getCroppedImageSize(scale, positions).width / 2
           )
         : 0
     },
     end: {
       top: alignVertical
-        ? Math.floor(img.clientHeight - getCroppedImageSize(scale, positions).height)
+        ? Math.floor(image.clientHeight - getCroppedImageSize(scale, positions).height)
         : 0,
       left: !alignVertical
-        ? Math.floor(img.clientWidth - getCroppedImageSize(scale, positions).width)
+        ? Math.floor(image.clientWidth - getCroppedImageSize(scale, positions).width)
         : 0
     }
   }[align];
@@ -90,15 +82,17 @@ export const withAlignment = (align, { img, placement, positions }) => {
 };
 
 export const getContainerPosition = ({
-  img,
+  image,
+  scale,
   translate,
   align = 'center',
   positions = {},
   margin = 20,
   placement = 'right'
 }) => {
+  if (!image) return;
   const settledFunction = placementFunc(placement);
-  const initialPosition = settledFunction(img, positions, margin);
+  const initialPosition = settledFunction({ image, scale, positions, margin });
   const translatedPosition = withTranslation(translate)(initialPosition);
-  return withAlignment(align, { img, placement, positions })(translatedPosition);
+  return withAlignment(align, { image, scale, placement, positions })(translatedPosition);
 };

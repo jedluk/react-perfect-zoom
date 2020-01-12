@@ -1,30 +1,22 @@
 import React from 'react';
+import { withUserProps } from './context/UserPropsContext';
 import * as PropTypes from 'prop-types';
 import Rectangle from './Rectangle';
 import { isNumber } from '../lib/utils';
+import Image from './ThumbnailImage';
 
-const Thumbnail = React.forwardRef(
-  ({ source, positions, rectangleStyles, events, size = [] }, ref) => (
+const Thumbnail = ({ events, imageRef, source, positions }) => {
+  const thumbnail = source.thumbnail || source;
+  return (
     <div className="perfect-zoom-image-picker">
-      <img
-        alt="thumbnail"
-        ref={ref}
-        src={source}
-        style={{
-          maxHeight: size[0],
-          maxWidth: size[1]
-        }}
-        {...events}
-      />
-      {Object.values(positions).some(isNumber) && (
-        <Rectangle rectangleStyles={rectangleStyles} positions={positions} />
-      )}
+      <Image ref={imageRef} thumbnail={thumbnail} events={events} />
+      {Object.values(positions).every(isNumber) && <Rectangle positions={positions} />}
     </div>
-  )
-);
+  );
+};
 
+// TODO: update propTypes
 Thumbnail.propTypes = {
-  handleLoadImage: PropTypes.func,
   handleClick: PropTypes.func,
   handleMouseMove: PropTypes.func,
   source: PropTypes.string,
@@ -41,4 +33,5 @@ Thumbnail.propTypes = {
   })
 };
 
-export default React.memo(Thumbnail);
+const userProps = ['source', 'rectangleStyles'];
+export default withUserProps(userProps)(Thumbnail);

@@ -38,8 +38,7 @@ class Canvas extends React.PureComponent {
   };
 
   getScaledImageDimensions = ({ clickX, clickY, currentX, currentY }) => {
-    const { image } = this.props;
-    const scale = image.naturalHeight / image.clientHeight;
+    const { image, scale } = this.props;
     return {
       x: Math.floor(Math.min(clickX, currentX) * scale),
       y: Math.floor(Math.min(clickY, currentY) * scale),

@@ -1,8 +1,6 @@
-export const cropImage = (
-  { naturalHeight, naturalWidth, clientHeight },
-  { currentX, currentY, clickX, clickY }
-) => {
-  const scale = naturalHeight / clientHeight;
+export const cropImage = (img, scale = 1, { currentX, currentY, clickX, clickY }) => {
+  if (!img) return;
+  const { naturalHeight, naturalWidth } = img;
   return {
     marginTop: -Math.floor(Math.min(currentY, clickY) * scale),
     marginRight: -Math.floor(naturalWidth - Math.max(currentX, clickX) * scale),

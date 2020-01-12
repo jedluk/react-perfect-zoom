@@ -7,21 +7,28 @@ import {
   getBottomCoordinates,
   getLeftCoordinates
 } from '../lib/rectangleCoordinates';
+import { withUserProps } from './context/UserPropsContext';
 import { areValidPositions } from '../lib/placement';
 
-const getLoaderCoordinates = ({ clickX, clickY, currentX, currentY }, style) => ({
-  top: Math.floor((clickY + currentY) / 2 - 47 / 2),
-  left: Math.floor((clickX + currentX) / 2 - 57 / 2),
-  color: style.color
+const getLoaderCoordinates = ({ clickX, currentX, clickY, currentY }) => ({
+  top: currentY || clickY,
+  left: currentX || clickX
 });
 
-const Rectangle = ({ positions, rectangleStyles }) => {
+const Rectangle = ({ source, realImageLoaded, positions, rectangleStyles }) => {
   if (!areValidPositions(positions)) {
     return null;
   }
+  if ('realImage' in source && !realImageLoaded) {
+    return (
+      <Loader
+        color={rectangleStyles.color}
+        position={getLoaderCoordinates(positions, rectangleStyles)}
+      />
+    );
+  }
   return (
     <Fragment>
-      <Loader position={getLoaderCoordinates(positions, rectangleStyles)} />
       <div
         className="perfect-zoom-top-border"
         style={getTopCoordinates(positions, rectangleStyles)}
@@ -55,4 +62,5 @@ Rectangle.propTypes = {
   })
 };
 
-export default React.memo(Rectangle);
+const userProps = ['realImageLoaded', 'source', 'rectangleStyles'];
+export default React.memo(withUserProps(userProps)(Rectangle));

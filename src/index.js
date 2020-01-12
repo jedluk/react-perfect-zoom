@@ -1,3 +1,3 @@
-import PerfectZoom from './components/PerfectZoom';
+import PerfectZoomWrapper from './components/PerfectZoomWrapper';
 
-export default PerfectZoom;
+export default PerfectZoomWrapper;
