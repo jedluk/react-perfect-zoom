@@ -18,9 +18,8 @@ describe('Canvas component', () => {
     const wrapper = shallow(<Canvas />);
     expect(wrapper.html()).toBeNull();
     wrapper.setProps({ positions });
-    wrapper.setProps({ positions });
     expect(wrapper.html()).toBeNull();
-    wrapper.setProps({ positions: undefined, image: {} });
+    wrapper.setProps({ positions: undefined, image });
     expect(wrapper.html()).toBeNull();
   });
   it('render canvas element with width and height set to numbers when correct props are provideed', () => {

@@ -1,9 +1,9 @@
 import {
   getCroppedImageSize,
-  withAlignment,
-  withTranslation,
   areValidPositions,
-  placementFunc
+  placementFunc,
+  parseTranslation,
+  calculateAlignment
 } from '../placement';
 
 describe('placement module', () => {
@@ -23,7 +23,7 @@ describe('placement module', () => {
     });
   });
 
-  describe('getPlacementFunction function', () => {
+  describe('placementFunc function', () => {
     it('return function when passing one of left, right, top, bottom', () => {
       ['left', 'right', 'top', 'bottom'].forEach((arg) =>
         expect(placementFunc(arg)).toBeInstanceOf(Function)
@@ -33,55 +33,56 @@ describe('placement module', () => {
       expect(placementFunc('xyz')).toBeUndefined();
     });
     it('return top and left coordinates when calling it twice', () => {
-      const image = {
+      const thumbnail = {
         clientWidth: 200,
         naturalHeight: 500,
         clientHeight: 100
       };
-      const positions = {
-        clickX: 10,
-        clickY: 10,
-        currentX: 50,
-        currentY: 50
+      const croppedImage = {
+        width: 500,
+        height: 800
       };
-      ['left', 'right', 'top', 'bottom'].forEach((arg) => {
-        expect(placementFunc(arg)(image, positions)).toBeInstanceOf(Object);
-        expect(placementFunc(arg)(image, positions)).toHaveProperty('top');
-        expect(placementFunc(arg)(image, positions)).toHaveProperty('left');
+
+      [('left', 'right', 'top', 'bottom')].forEach((arg) => {
+        expect(placementFunc(arg)({ thumbnail, croppedImage })).toBeInstanceOf(Object);
+        expect(placementFunc(arg)({ thumbnail, croppedImage })).toHaveProperty('top');
+        expect(placementFunc(arg)({ thumbnail, croppedImage })).toHaveProperty('left');
       });
     });
   });
 
-  describe('with translation function', () => {
-    it('add translation to top and left properties of object', () => {
-      expect(withTranslation({ x: 10, y: 10 })({ top: 2, left: 20 })).toEqual({
-        top: 12,
-        left: 30
+  describe('parse translation function', () => {
+    it('return top and left properties from translate object given by the user', () => {
+      expect(parseTranslation({ x: 10, y: 10 })).toEqual({
+        top: 10,
+        left: 10
+      });
+    });
+    it('return top: 0, left: 0 when argument is not valid ', () => {
+      expect(parseTranslation({ o: 'o', p: 'p' })).toEqual({
+        top: 0,
+        left: 0
       });
     });
   });
 
-  describe('withAlignment function', () => {
-    it('align real image relative to thumbnail', () => {
+  describe('calculate alignment function', () => {
+    it('return correct top and left values based on provided placemnt', () => {
+      const verticalAlign = true;
       const align = 'center';
-      const placement = 'right';
-      const positions = {
-        clickX: 10,
-        clickY: 10,
-        currentX: 20,
-        currentY: 20
-      };
-      const img = {
+      const thumbnail = {
         clientHeight: 100,
         naturalHeight: 200
       };
-      const obj = {
-        top: 10,
-        left: 10
+      const croppedImage = {
+        width: 500,
+        height: 800
       };
-      expect(withAlignment(align, { placement, positions, img })(obj)).toEqual({
-        top: 50,
-        left: 10
+      expect(
+        calculateAlignment({ croppedImage, thumbnail, verticalAlign })(align)
+      ).toEqual({
+        top: -350,
+        left: 0
       });
     });
   });

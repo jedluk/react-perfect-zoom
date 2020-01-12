@@ -65,12 +65,12 @@ class Canvas extends React.PureComponent {
 }
 
 Canvas.propTypes = {
-  image: PropTypes.instanceOf(Element),
+  image: PropTypes.oneOfType([PropTypes.object, PropTypes.instanceOf(Element)]),
   positions: PropTypes.shape({
     clickX: PropTypes.number,
     clickY: PropTypes.number,
-    posX: PropTypes.number,
-    posY: PropTypes.number
+    currentX: PropTypes.number,
+    currentY: PropTypes.number
   })
 };
 

@@ -16,83 +16,79 @@ export const getCroppedImageSize = (scale, { clickX, clickY, currentX, currentY 
 
 export const placementFunc = (placement) =>
   ({
-    right({ image, margin = 20 }) {
+    right({ margin, thumbnail }) {
       return {
         top: 0,
-        left: image.clientWidth + margin
+        left: thumbnail.clientWidth + margin
       };
     },
-    left({ scale, positions, margin = 20 }) {
+    left({ margin, croppedImage }) {
       return {
         top: 0,
-        left: Math.floor(-margin - getCroppedImageSize(scale, positions).width)
+        left: Math.floor(-margin - croppedImage.width)
       };
     },
-    top({ scale, positions, margin = 20 }) {
+    top({ margin, croppedImage }) {
       return {
-        top: Math.floor(-margin - getCroppedImageSize(scale, positions).height),
+        top: Math.floor(-margin - croppedImage.height),
         left: 0
       };
     },
-    bottom({ image, margin = 20 }) {
+    bottom({ margin, thumbnail }) {
       return {
-        top: image.clientHeight + margin,
+        top: thumbnail.clientHeight + margin,
         left: 0
       };
     }
   }[placement]);
 
-export const withTranslation = (translate) => (obj) => ({
-  top: obj.top + getProperty(translate, 'y', 0),
-  left: obj.left + getProperty(translate, 'x', 0)
-});
-
-export const withAlignment = (align, { image, scale, placement, positions }) => {
-  const alignVertical = ['left', 'right'].includes(placement);
-  const displacement = {
+export const calculateAlignment = ({ thumbnail, croppedImage, verticalAlign }) => (
+  align
+) =>
+  ({
     start: {
       top: 0,
       left: 0
     },
     center: {
-      top: alignVertical
-        ? Math.floor(
-            image.clientHeight / 2 - getCroppedImageSize(scale, positions).height / 2
-          )
+      top: verticalAlign
+        ? Math.floor(0.5 * thumbnail.clientHeight - 0.5 * croppedImage.height)
         : 0,
-      left: !alignVertical
-        ? Math.floor(
-            image.clientWidth / 2 - getCroppedImageSize(scale, positions).width / 2
-          )
+      left: !verticalAlign
+        ? Math.floor(0.5 * thumbnail.clientWidth - 0.5 * croppedImage.width)
         : 0
     },
     end: {
-      top: alignVertical
-        ? Math.floor(image.clientHeight - getCroppedImageSize(scale, positions).height)
-        : 0,
-      left: !alignVertical
-        ? Math.floor(image.clientWidth - getCroppedImageSize(scale, positions).width)
-        : 0
+      top: verticalAlign ? Math.floor(thumbnail.clientHeight - croppedImage.height) : 0,
+      left: !verticalAlign ? Math.floor(thumbnail.clientWidth - croppedImage.width) : 0
     }
-  }[align];
-  return (obj) => ({
-    top: obj.top + displacement.top,
-    left: obj.left + displacement.left
-  });
-};
+  }[align]);
+
+export const parseTranslation = (translate) => ({
+  top: getProperty(translate, 'y', 0),
+  left: getProperty(translate, 'x', 0)
+});
 
 export const getContainerPosition = ({
-  image,
   scale,
   translate,
+  image: thumbnail,
   align = 'center',
   positions = {},
   margin = 20,
   placement = 'right'
 }) => {
-  if (!image) return;
-  const settledFunction = placementFunc(placement);
-  const initialPosition = settledFunction({ image, scale, positions, margin });
-  const translatedPosition = withTranslation(translate)(initialPosition);
-  return withAlignment(align, { image, scale, placement, positions })(translatedPosition);
+  if (!thumbnail) return;
+  const croppedImage = getCroppedImageSize(scale, positions);
+  const verticalAlign = ['left', 'right'].includes(placement);
+  const basePositon = placementFunc(placement)({
+    thumbnail,
+    croppedImage,
+    margin
+  });
+  const translation = parseTranslation(translate);
+  const alignment = calculateAlignment({ croppedImage, thumbnail, verticalAlign })(align);
+  basePositon.top += translation.top + alignment.top;
+  basePositon.left += translation.left + alignment.left;
+  return basePositon;
 };

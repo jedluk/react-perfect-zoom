@@ -14,8 +14,6 @@ To install component run command in root of your project
 npm install react-perfect-zoom
 ```
 
-There are no additional steps required (like inserting css styles).
-
 ## Usage
 
 ```js
@@ -28,6 +26,7 @@ const SomeComponent = (props) => (
     <PerfectZoom
         allowDownload
         placement="right"
+        align="center"
         source={sample}
         thumbnailSize={[300, 500]}
         margin={10}
@@ -56,7 +55,7 @@ const SomeComponent = (props) => (
 source: string
 
 // dimensions of thumbnail
-thumbnailSize: ?[number, number] = [300,500] // height go first
+thumbnailSize: ?[number, number] = [300,500] // heigth go first
 
 // placement of real image
 placement: ?('left' | 'right' | 'top' | 'bottom') = 'right'
@@ -71,8 +70,10 @@ translate: ?{ x: number, y: number }
 rectangleStyles: ?{ color: string, size: number }
 
 // allow download cropped image
-allowDownload: bool = false
+allowDownload: ?boolean = false
 
+// alignment of real image relative to thumbnail
+align: ?('start' | 'center' | 'end') = 'center'
 
 ```
 
@@ -89,4 +90,4 @@ Any kind of help is highly appreciated. Feel free to add any kind of issue and c
 - [x] support for mobile devices (touch events)
 - [x] remove scrollbars from body when zooming image
 - [x] allow to download cropped image
-- [ ] add new props called 'align' (align relative to thumbnail)
+- [x] add new props called 'align' (alignment relative to thumbnail)

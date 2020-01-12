@@ -4,7 +4,7 @@
     "name": "Jędrzej Łukasiuk",
     "email": "jedrzej.lukasiuk@gmail.com"
   },
-  "version": "0.4.0",
+  "version": "0.5.1",
   "main": "dist/index.js",
   "private": false,
   "license": "MIT",
@@ -19,10 +19,12 @@
     "url": "https://github.com/jedluk/react-perfect-zoom/issues"
   },
   "scripts": {
-    "build": "NODE_ENV=production && rm -rf dist && mkdir dist && npx babel src --ignore '**/*.spec.js' --out-dir dist --copy-files",
+    "build:all": "rm -rf dist && mkdir dist && npm run build:babel && npm run copy:assets",
+    "build:babel": "npx babel src --out-dir dist --ignore '**/*.spec.js','src/setupTests.js'",
+    "copy:assets": "cp -R src/assets dist/assets",
     "test": "jest",
     "test-watch": "jest --watch --verbose false",
-    "npm:publish": "npm run test && npm run build && npm publish"
+    "npm:publish": "npm run test && npm run build:all && npm publish"
   },
   "eslintConfig": {
     "extends": "react-app"
