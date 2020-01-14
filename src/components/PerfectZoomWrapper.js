@@ -58,9 +58,6 @@ PerfectZoomWrapper.defaultProps = {
   placement: 'right',
   align: 'center',
   margin: 20,
-  source: {
-    thumbnailSize: [300,500]
-  },
   allowDownload: false,
   rectangleStyles: {
     size: 2,
