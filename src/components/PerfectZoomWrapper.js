@@ -3,7 +3,6 @@ import * as PropTypes from 'prop-types';
 import PerfectZoom from './PerfectZoom';
 import { PefectZoomProps } from './context/PerfectZoomContext';
 import { realImageStates } from '../lib/imageState';
-import { pick } from '../lib/utils';
 import '../assets/index.css';
 
 class PerfectZoomWrapper extends React.PureComponent {
@@ -24,7 +23,7 @@ class PerfectZoomWrapper extends React.PureComponent {
     return (
       <PefectZoomProps.Provider
         value={{
-          ...pick(this.props, Object.keys(PerfectZoomWrapper.propTypes)),
+          ...this.props,
           realImageState: this.state.realImageState,
           setRealImageState: this.setRealImageState
         }}

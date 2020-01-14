@@ -11,6 +11,7 @@ const Thumbnail = ({
   events,
   imageRef,
   realImageState,
+  setRealImageState,
   source,
   positions,
   rectangleStyles

@@ -1,6 +1,5 @@
 import React from 'react';
 import Thumbnail from '../Thumbnail';
-import Rectangle from '../Rectangle';
 import { shallow } from 'enzyme';
 
 describe('Thumbnail component', () => {
@@ -15,7 +14,7 @@ describe('Thumbnail component', () => {
     const size = [300, 500];
     const wrapper = shallow(
       <Thumbnail
-        ref={React.createRef}
+        ref={React.createRef()}
         size={size}
         source={source}
         positions={positions}
