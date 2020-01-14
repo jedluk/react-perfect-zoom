@@ -5,11 +5,10 @@ import { withPerfectZoomProps } from './context/PerfectZoomContext';
 import { areValidPositions, getContainerPosition } from '../lib/placement';
 import { cropImage } from '../lib/crop';
 import { isMobile } from '../lib/platformDetector';
-import { isObject } from '../lib/utils';
 import { realImageStates } from '../lib/imageState';
 import { isSingleSource } from '../lib/source';
 
-class Zoom extends React.Component {
+export class Zoom extends React.Component {
   constructor(props) {
     super(props);
     this.realImageRef = isSingleSource(props.source)
@@ -18,11 +17,13 @@ class Zoom extends React.Component {
   }
 
   getScale = () => {
-    if (!isObject(this.realImageRef.current)) return;
-    return (
-      this.realImageRef.current.naturalHeight /
-      this.props.thumbnailRef.current.clientHeight
-    );
+    if(this.realImageRef && this.realImageRef.current){
+      return (
+        this.realImageRef.current.naturalHeight /
+        this.props.thumbnailRef.current.clientHeight
+      );
+    }
+    return 1;
   };
 
   setImageLoaded = () => {

@@ -8,7 +8,7 @@ import { isMobile, touchDevice } from '../lib/platformDetector';
 import withMouseEvents from './hoc/withMouseEvents';
 import withTouchEvents from './hoc/withTouchEvents';
 
-const PerfectZoom = ({ imageRef, positions, events }) => (
+export const PerfectZoom = ({ imageRef, positions, events }) => (
   <div className="pos-relative">
     <Thumbnail imageRef={imageRef} positions={positions} events={events} />
     {getProperty(process, 'env.REACT_APP_PERFECT_ZOOM_DEBUG', false) && (
@@ -23,7 +23,7 @@ const PerfectZoom = ({ imageRef, positions, events }) => (
 PerfectZoom.propTypes = {
   imageRef: PropTypes.shape({
     current: PropTypes.instanceOf(Element)
-  }),
+  }).isRequired,
   positions: PropTypes.shape({
     clickX: PropTypes.number,
     clickY: PropTypes.number,

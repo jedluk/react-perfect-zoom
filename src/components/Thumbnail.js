@@ -7,7 +7,7 @@ import { isNumber } from '../lib/utils';
 import { isSingleSource } from '../lib/source';
 import { realImageStates } from '../lib/imageState';
 
-const Thumbnail = ({
+export const Thumbnail = ({
   events,
   imageRef,
   realImageState,

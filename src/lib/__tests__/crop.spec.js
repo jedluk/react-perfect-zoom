@@ -13,11 +13,12 @@ describe('cropImage function', () => {
       naturalHeight: 900,
       naturalWidth: 1600
     };
-    expect(cropImage(image, currentPositions)).toEqual({
-      marginTop: -30,
-      marginLeft: -30,
-      marginRight: -1525,
-      marginBottom: -840
+    const scale = 3.5;
+    expect(cropImage(image, scale, currentPositions)).toEqual({
+      marginTop: -35,
+      marginLeft: -35,
+      marginRight: -1512,
+      marginBottom: -830
     });
   });
 });
