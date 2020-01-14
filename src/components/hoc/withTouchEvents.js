@@ -2,11 +2,13 @@ import React from 'react';
 import { INITIAL_POSITION } from '../../lib/rectangleCoordinates';
 import { getRelativeCoordinates, getPositions, isOutsideImageRectangle } from './mixins';
 import { isNumber } from '../../lib/utils';
+import { realImageStates } from '../../lib/imageState';
+import { withPerfectZoomProps } from '../context/PerfectZoomContext';
 
 const EXIT_MARGIN = 10;
 
 export default function withTouchEvents(Component) {
-  return class extends React.PureComponent {
+  class CoordinatesProvider extends React.Component {
     constructor(props) {
       super(props);
       this.imageRef = React.createRef();
@@ -32,6 +34,9 @@ export default function withTouchEvents(Component) {
     }
 
     handleTouchStart = (e) => {
+      if (this.props.realImageState === realImageStates.NOT_LOADED) {
+        this.props.setRealImageState(realImageStates.IN_PROGRESS);
+      }
       this.thumbnailRect = this.imageRef.current.getBoundingClientRect();
       const startPosition = getRelativeCoordinates(this.thumbnailRect, e.touches[0]);
       this.setState({ startPosition });
@@ -67,5 +72,8 @@ export default function withTouchEvents(Component) {
         />
       );
     }
-  };
+  }
+  return withPerfectZoomProps(['realImageState', 'setRealImageState'])(
+    CoordinatesProvider
+  );
 }

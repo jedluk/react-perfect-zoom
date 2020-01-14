@@ -70,14 +70,15 @@ export const parseTranslation = (translate) => ({
 });
 
 export const getContainerPosition = ({
+  scale,
   translate,
-  img: thumbnail,
+  image: thumbnail,
   align = 'center',
   positions = {},
   margin = 20,
   placement = 'right'
 }) => {
-  const scale = thumbnail.naturalHeight / thumbnail.clientHeight;
+  if (!thumbnail || !areValidPositions(positions)) return;
   const croppedImage = getCroppedImageSize(scale, positions);
   const verticalAlign = ['left', 'right'].includes(placement);
   const basePositon = placementFunc(placement)({

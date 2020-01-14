@@ -6,12 +6,14 @@ import {
   toggleBodyVisibility,
   isOutsideImageRectangle
 } from './mixins';
+import { withPerfectZoomProps } from '../context/PerfectZoomContext';
+import { realImageStates } from '../../lib/imageState';
 import { isNumber } from '../../lib/utils';
 
 const EXIT_MARGIN = 4;
 
 export default function withMouseEvents(Component) {
-  return class extends React.PureComponent {
+  class CoordinatesProvider extends React.Component {
     constructor(props) {
       super(props);
       this.imageRef = React.createRef();
@@ -53,6 +55,9 @@ export default function withMouseEvents(Component) {
     };
 
     handleClick = (e) => {
+      if (this.props.realImageState === realImageStates.NOT_LOADED) {
+        this.props.setRealImageState(realImageStates.IN_PROGRESS);
+      }
       toggleBodyVisibility({ overflowX: 'hidden', overflowY: 'hidden' });
       this.thumbnailRect = this.imageRef.current.getBoundingClientRect();
       this.setState({
@@ -71,5 +76,8 @@ export default function withMouseEvents(Component) {
         />
       );
     }
-  };
+  }
+  return withPerfectZoomProps(['realImageState', 'setRealImageState'])(
+    CoordinatesProvider
+  );
 }

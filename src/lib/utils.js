@@ -17,3 +17,11 @@ export const getProperty = (obj, path, fallback) => {
   }
   return value || fallback;
 };
+
+export const pick = (rootObj, props) =>
+  Object.keys(rootObj)
+    .filter((key) => props.includes(key))
+    .reduce((obj, key) => {
+      obj[key] = rootObj[key];
+      return obj;
+    }, {});

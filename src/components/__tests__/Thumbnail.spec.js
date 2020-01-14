@@ -1,35 +1,36 @@
 import React from 'react';
-import Thumbnail from '../Thumbnail';
-import Rectangle from '../Rectangle';
+import { Thumbnail } from '../Thumbnail';
 import { shallow } from 'enzyme';
 
 describe('Thumbnail component', () => {
-  it('pass props to image element', () => {
-    const source = 'image.jpg';
-    const positions = {
-      currentX: 10,
-      currentY: 10,
-      clickX: 1,
-      clickY: 10
-    };
-    const size = [300, 500];
+  const source = {
+    thumbnailURL: 'image.jpg',
+    thumbnailSize: [300, 500]
+  };
+  const positions = {
+    currentX: 10,
+    currentY: 10,
+    clickX: null,
+    clickY: null
+  };
+
+  it('render image picker container', () => {
+    positions.clickX = null;
+    positions.clickY = null;
     const wrapper = shallow(
-      <Thumbnail
-        ref={React.createRef}
-        size={size}
-        source={source}
-        positions={positions}
-      />
+      <Thumbnail imageRef={React.createRef()} source={source} positions={positions} />
     );
-    expect(wrapper.find("[alt='thumbnail']").length).toEqual(1);
-    expect(wrapper.find("[alt='thumbnail']").prop('src')).toEqual(source);
-    expect(wrapper.find("[alt='thumbnail']").prop('style')).toHaveProperty(
-      'maxHeight',
-      size[0]
+    expect(wrapper.at(0).hasClass('perfect-zoom-image-picker')).toBeTruthy();
+    // no rectangle !! (only image exists)
+    expect(wrapper.children().length).toEqual(1);
+  });
+
+  it('render rectangle when positions are set', () => {
+    positions.clickX = 100;
+    positions.clickY = 100;
+    const wrapper = shallow(
+      <Thumbnail imageRef={React.createRef()} source={source} positions={positions} />
     );
-    expect(wrapper.find("[alt='thumbnail']").prop('style')).toHaveProperty(
-      'maxWidth',
-      size[1]
-    );
+    expect(wrapper.children().length).toEqual(2);
   });
 });

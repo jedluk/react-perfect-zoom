@@ -1,14 +1,26 @@
 import React from 'react';
-import PerfectZoom from '../PerfectZoom';
-import { mount } from 'enzyme';
+import { PerfectZoom } from '../PerfectZoom';
+import { shallow } from 'enzyme';
 
 // TODO: e2e tests for entire component
 describe('Perfect Zoom component', () => {
-  it('render thumbnail on initial render', () => {
-    const wrapper = mount(
-      <PerfectZoom placement="right" source="image.jpg" size={[200, 300]} />
+  it('render only thumbnail on initial render', () => {
+    const wrapper = shallow(
+      <PerfectZoom
+        imageRef={React.createRef()}
+        positions={{
+          clickX: null,
+          clickY: null,
+          posX: null,
+          posY: null
+        }}
+        events={{
+          onClick: () => {},
+          onMouseMove: () => {}
+        }}
+      />
     );
-    expect(wrapper.find("[alt='thumbnail']").length).toEqual(1);
-    expect(wrapper.find("[alt='thumbnail']").length).toEqual(1);
+    expect(wrapper.at(0).hasClass('pos-relative')).toBeTruthy();
+    expect(wrapper.children().length).toEqual(1);
   });
 });

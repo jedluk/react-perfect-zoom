@@ -1,16 +1,24 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
+import Loader from './Loader';
 import {
   getTopCoordinates,
   getRightCoordinates,
   getBottomCoordinates,
-  getLeftCoordinates
+  getLeftCoordinates,
+  getLoaderCoordinates
 } from '../lib/rectangleCoordinates';
 import { areValidPositions } from '../lib/placement';
+import { realImageStates } from '../lib/imageState';
 
-const Rectangle = ({ positions, rectangleStyles }) => {
+const Rectangle = ({ singleImage, realImageState, positions, rectangleStyles }) => {
   if (!areValidPositions(positions)) {
     return null;
+  }
+  if (!singleImage && realImageState === realImageStates.IN_PROGRESS) {
+    return (
+      <Loader color={rectangleStyles.color} position={getLoaderCoordinates(positions)} />
+    );
   }
   return (
     <Fragment>
@@ -44,7 +52,9 @@ Rectangle.propTypes = {
   rectangleStyles: PropTypes.shape({
     color: PropTypes.string,
     size: PropTypes.number
-  })
+  }),
+  singleImage: PropTypes.bool,
+  realImageState: PropTypes.oneOf(Object.values(realImageStates))
 };
 
 export default React.memo(Rectangle);
