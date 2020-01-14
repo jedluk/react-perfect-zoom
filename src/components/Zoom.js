@@ -6,18 +6,18 @@ import { areValidPositions, getContainerPosition } from '../lib/placement';
 import { cropImage } from '../lib/crop';
 import { isMobile } from '../lib/platformDetector';
 import { realImageStates } from '../lib/imageState';
-import { isSingleSource } from '../lib/source';
+import { hasSingleImage, getImageSource } from '../lib/source';
 
 export class Zoom extends React.Component {
   constructor(props) {
     super(props);
-    this.realImageRef = isSingleSource(props.source)
+    this.realImageRef = hasSingleImage(props.source)
       ? props.thumbnailRef
       : React.createRef(null);
   }
 
   getScale = () => {
-    if(this.realImageRef && this.realImageRef.current){
+    if (this.realImageRef && this.realImageRef.current) {
       return (
         this.realImageRef.current.naturalHeight /
         this.props.thumbnailRef.current.clientHeight
@@ -36,7 +36,7 @@ export class Zoom extends React.Component {
       return null;
     }
     const scale = this.getScale();
-    const singleSource = isSingleSource(source);
+    const singleImage = hasSingleImage(source);
     return (
       <div
         className="perfect-zoom-container"
@@ -44,6 +44,7 @@ export class Zoom extends React.Component {
           realImageState === realImageStates.LOADED
             ? getContainerPosition({
                 scale,
+                positions,
                 align: this.props.align,
                 placement: this.props.placement,
                 translate: this.props.translate,
@@ -57,15 +58,15 @@ export class Zoom extends React.Component {
           <Canvas image={this.realImageRef.current} positions={positions} scale={scale} />
         )}
         <img
-          src={singleSource ? source.url : source.realImage.url}
+          src={getImageSource(source)}
           alt="realImage"
           style={
             realImageState === realImageStates.LOADED
               ? cropImage(this.realImageRef.current, scale, positions)
               : { display: 'none' }
           }
-          ref={singleSource ? undefined : this.realImageRef}
-          onLoad={singleSource ? undefined : this.setImageLoaded}
+          ref={singleImage ? undefined : this.realImageRef}
+          onLoad={singleImage ? undefined : this.setImageLoaded}
         />
       </div>
     );
@@ -73,27 +74,7 @@ export class Zoom extends React.Component {
 }
 
 Zoom.propTypes = {
-  source: PropTypes.oneOfType([
-    PropTypes.shape({
-      url: PropTypes.string,
-      size: PropTypes.arrayOf(PropTypes.number),
-      realSize: PropTypes.arrayOf(PropTypes.number)
-    }),
-    PropTypes.shape({
-      thumbnail: PropTypes.shape({
-        url: PropTypes.string.isRequired,
-        size: PropTypes.arrayOf(PropTypes.number)
-      }),
-      realImage: PropTypes.shape({
-        url: PropTypes.string.isRequired,
-        size: PropTypes.arrayOf(PropTypes.number)
-      })
-    })
-  ]).isRequired,
-  allowDownload: PropTypes.bool,
-  placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']).isRequired,
-  align: PropTypes.oneOf(['start', 'center', 'end']).isRequired,
-  imgRef: PropTypes.shape({
+  thumbnailRef: PropTypes.shape({
     current: PropTypes.instanceOf(Element)
   }),
   positions: PropTypes.shape({
@@ -102,11 +83,19 @@ Zoom.propTypes = {
     posX: PropTypes.number,
     posY: PropTypes.number
   }),
+  allowDownload: PropTypes.bool,
+  align: PropTypes.oneOf(['start', 'center', 'end']).isRequired,
+  placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']).isRequired,
+  margin: PropTypes.number,
+  source: PropTypes.shape({
+    thumbnailURL: PropTypes.string.isRequired,
+    thumbnailSize: PropTypes.arrayOf(PropTypes.number),
+    imageURL: PropTypes.string
+  }).isRequired,
   translate: PropTypes.shape({
     x: PropTypes.number,
     y: PropTypes.number
   }),
-  margin: PropTypes.number,
   realImageState: PropTypes.oneOf(Object.values(realImageStates)),
   setRealImageState: PropTypes.func
 };
@@ -115,9 +104,9 @@ const HoC = withPerfectZoomProps([
   'allowDownload',
   'align',
   'placement',
-  'translate',
   'margin',
   'source',
+  'translate',
   'realImageState',
   'setRealImageState'
 ])(Zoom);

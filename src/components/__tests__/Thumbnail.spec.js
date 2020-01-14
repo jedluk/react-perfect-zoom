@@ -4,10 +4,8 @@ import { shallow } from 'enzyme';
 
 describe('Thumbnail component', () => {
   const source = {
-    thumbnail: {
-      url: 'image.jpg',
-      size: [300, 500]
-    }
+    thumbnailURL: 'image.jpg',
+    thumbnailSize: [300, 500]
   };
   const positions = {
     currentX: 10,
@@ -28,11 +26,11 @@ describe('Thumbnail component', () => {
   });
 
   it('render rectangle when positions are set', () => {
-      positions.clickX = 100;
-      positions.clickY = 100;
-      const wrapper = shallow(
-        <Thumbnail imageRef={React.createRef()} source={source} positions={positions} />
-      );
-      expect(wrapper.children().length).toEqual(2);
+    positions.clickX = 100;
+    positions.clickY = 100;
+    const wrapper = shallow(
+      <Thumbnail imageRef={React.createRef()} source={source} positions={positions} />
+    );
+    expect(wrapper.children().length).toEqual(2);
   });
 });

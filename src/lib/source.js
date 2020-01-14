@@ -1,3 +1,7 @@
-import { isString, getProperty } from './utils';
+export const hasSingleImage = (source) => typeof source.imageURL === 'undefined';
 
-export const isSingleSource = (source) => !isString(getProperty(source, 'realImage.url'));
+export const getThumbnailSource = (source) => source.thumbnailURL;
+
+export const getThumbnailSize = (source) => source.thumbnailSize;
+
+export const getImageSource = (source) => source.imageURL || getThumbnailSource(source);

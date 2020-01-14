@@ -11,11 +11,11 @@ import {
 import { areValidPositions } from '../lib/placement';
 import { realImageStates } from '../lib/imageState';
 
-const Rectangle = ({ singleSource, realImageState, positions, rectangleStyles }) => {
+const Rectangle = ({ singleImage, realImageState, positions, rectangleStyles }) => {
   if (!areValidPositions(positions)) {
     return null;
   }
-  if (!singleSource && realImageState === realImageStates.IN_PROGRESS) {
+  if (!singleImage && realImageState === realImageStates.IN_PROGRESS) {
     return (
       <Loader color={rectangleStyles.color} position={getLoaderCoordinates(positions)} />
     );
@@ -53,7 +53,7 @@ Rectangle.propTypes = {
     color: PropTypes.string,
     size: PropTypes.number
   }),
-  singleSource: PropTypes.bool,
+  singleImage: PropTypes.bool,
   realImageState: PropTypes.oneOf(Object.values(realImageStates))
 };
 

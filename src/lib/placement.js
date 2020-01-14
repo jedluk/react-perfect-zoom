@@ -78,7 +78,7 @@ export const getContainerPosition = ({
   margin = 20,
   placement = 'right'
 }) => {
-  if (!thumbnail) return;
+  if (!thumbnail || !areValidPositions(positions)) return;
   const croppedImage = getCroppedImageSize(scale, positions);
   const verticalAlign = ['left', 'right'].includes(placement);
   const basePositon = placementFunc(placement)({

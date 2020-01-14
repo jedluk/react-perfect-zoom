@@ -1,13 +1,13 @@
 import React from 'react';
 
-export default React.forwardRef(({ thumbnail, events, cursorNone, handleLoad }, ref) => (
+export default React.forwardRef(({ thumbnailURL, size, events, cursorNone, handleLoad }, ref) => (
   <img
     alt="thumbnail"
     ref={ref}
-    src={thumbnail.url}
+    src={thumbnailURL}
     style={{
-      maxHeight: thumbnail.size[0],
-      maxWidth: thumbnail.size[1],
+      maxHeight: size[0],
+      maxWidth: size[1],
       cursor: cursorNone ? 'none' : 'crosshair'
     }}
     {...events}

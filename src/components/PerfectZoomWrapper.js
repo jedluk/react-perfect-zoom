@@ -35,23 +35,11 @@ class PerfectZoomWrapper extends React.PureComponent {
 }
 
 PerfectZoomWrapper.propTypes = {
-  source: PropTypes.oneOfType([
-    PropTypes.shape({
-      url: PropTypes.string,
-      size: PropTypes.arrayOf(PropTypes.number),
-      realSize: PropTypes.arrayOf(PropTypes.number)
-    }),
-    PropTypes.shape({
-      thumbnail: PropTypes.shape({
-        url: PropTypes.string.isRequired,
-        size: PropTypes.arrayOf(PropTypes.number)
-      }),
-      realImage: PropTypes.shape({
-        url: PropTypes.string.isRequired,
-        size: PropTypes.arrayOf(PropTypes.number)
-      })
-    })
-  ]).isRequired,
+  source: PropTypes.shape({
+    thumbnailURL: PropTypes.string.isRequired,
+    thumbnailSize: PropTypes.arrayOf(PropTypes.number),
+    imageURL: PropTypes.string
+  }).isRequired,
   placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
   align: PropTypes.oneOf(['start', 'center', 'end']),
   margin: PropTypes.number,
@@ -70,6 +58,9 @@ PerfectZoomWrapper.defaultProps = {
   placement: 'right',
   align: 'center',
   margin: 20,
+  source: {
+    thumbnailSize: [300,500]
+  },
   allowDownload: false,
   rectangleStyles: {
     size: 2,

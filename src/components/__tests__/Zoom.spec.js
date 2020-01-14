@@ -20,7 +20,7 @@ describe('Zoom component', () => {
     }
   };
   const source = {
-    url: 'image.jpg'
+    thumbnailURL: 'image.jpg'
   };
 
   it('render nothing when positions are not passed or positions are not numbers', () => {
