@@ -4,8 +4,8 @@ React component which allow you to see exact part of image thumbnail in real dim
 
 ![Alt Demo](https://raw.githubusercontent.com/jedluk/random/master/react-perfect-zoom/perfect_zoom_demo.gif)
 
-**Documentation for versions < 1.0 can be found here [v0.5.1](https://github.com/jedluk/react-perfect-zoom/tree/v0.5.1)**
-**Demo available here: [playground](https://jedluk.github.io/react-perfect-zoom-playground/)**
+**Documentation for versions < 1.0 can be found here [v0.5.1](https://github.com/jedluk/react-perfect-zoom/tree/v0.5.1)** \
+**Demo available here: [playground](https://jedluk.github.io/react-perfect-zoom-playground/)** \
 Component is built in pure React without additional npm dependencies. From version 1.0.0 it's possible to distinguish between thumbnail and real image source (page is not absorbed by fetching big assets on initial load - real image is loaded on demand, when user start zooming). Wide range of props let you display original image exactly where you want it. It works with either mouse or touch events. On desktop it's even possible to download zoomed image (use _allowDownload_ props and simply press 'D' key while zooming).
 
 ## Installation
@@ -65,11 +65,11 @@ const SomeComponent = (props) => (
 
 // essential props for component;
 // passing thumbnailURL value ensures minimal configuration for the component.
-// thumbnailSize determine dimensions of thumbnail,
+// thumbnailSize determine dimensions of thumbnail (fallback value is set to [300, 500]),
 // imageURL is source of orignal image, if no imageURL is provided then thumbnailURL will be treated as imageURL
 source: {
     thumbnailURL: string,
-    thumbnailSize: ?[number, number] = [300.500],
+    thumbnailSize: ?[number, number],
     imageURL: ?string
 }
 
