@@ -5,6 +5,7 @@ import Rectangle from './Rectangle';
 import { withPerfectZoomProps } from './context/PerfectZoomContext';
 import { isNumber } from '../lib/utils';
 import { hasSingleImage, getThumbnailSource, getThumbnailSize } from '../lib/source';
+import { getLoaderCoordinates } from '../lib/rectangleCoordinates';
 import { realImageStates } from '../lib/imageState';
 
 export const Thumbnail = ({
@@ -14,7 +15,8 @@ export const Thumbnail = ({
   setRealImageState,
   source,
   positions,
-  rectangleStyles
+  rectangleStyles,
+  loader: CustomLoader
 }) => {
   const singleImage = hasSingleImage(source);
   return (
@@ -35,6 +37,9 @@ export const Thumbnail = ({
           singleImage={singleImage}
           realImageState={realImageState}
           rectangleStyles={rectangleStyles}
+          {...(typeof CustomLoader === 'function' && {
+            loader: <CustomLoader mousePosition={getLoaderCoordinates(positions)} />
+          })}
         />
       )}
     </div>
@@ -56,6 +61,7 @@ Thumbnail.propTypes = {
   imageRef: PropTypes.shape({
     current: PropTypes.instanceOf(Element)
   }),
+  loader: PropTypes.func,
   realImageState: PropTypes.oneOf(Object.values(realImageStates)),
   setRealImageState: PropTypes.func,
   rectangleStyles: PropTypes.shape({
@@ -66,6 +72,7 @@ Thumbnail.propTypes = {
 
 const requiredProps = [
   'source',
+  'loader',
   'realImageState',
   'setRealImageState',
   'rectangleStyles'
