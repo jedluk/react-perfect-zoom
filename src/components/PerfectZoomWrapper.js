@@ -51,6 +51,7 @@ PerfectZoomWrapper.propTypes = {
     x: PropTypes.number,
     y: PropTypes.number
   }),
+  loader: PropTypes.func,
   allowDownload: PropTypes.bool
 };
 
